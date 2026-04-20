@@ -4,357 +4,894 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NexaMobile — La 5G. Librement.</title>
+<title>NexaMobile — La 5G partout en Europe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#000000;--bg1:#0a0a0a;--bg2:#111111;--bg3:#1a1a1a;--bg4:#222222;
-  --border:rgba(255,255,255,0.07);--borderb:rgba(255,255,255,0.13);
-  --text:#f5f5f7;--text2:#a1a1a6;--text3:#6e6e73;
-  --blue:#0a84ff;--bluedim:rgba(10,132,255,0.14);
-  --green:#30d158;--greendim:rgba(48,209,88,0.12);
-  --purple:#bf5af2;--purpledim:rgba(191,90,242,0.12);
-  --orange:#ff9f0a;--orangedim:rgba(255,159,10,0.12);
-  --red:#ff453a;--cyan:#5ac8fa;
+
+/* ── RESET & BASE ─────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+font-family: ‘Figtree’, -apple-system, BlinkMacSystemFont, sans-serif;
+background: #000;
+color: #f5f5f7;
+-webkit-font-smoothing: antialiased;
+overflow-x: hidden;
 }
-html{scroll-behavior:smooth}
-body{font-family:'Outfit',-apple-system,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none}
+img, svg { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
 
-/* CURSOR */
-.cur{position:fixed;width:8px;height:8px;background:#fff;border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:difference;transform:translate(-50%,-50%)}
-.cur-ring{position:fixed;width:38px;height:38px;border:1.5px solid rgba(255,255,255,0.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .2s}
-.cur-ring.h{width:58px;height:58px;border-color:var(–blue)}
+/* ── TOKENS ─────────────────────────────────────── */
+:root {
+–black:   #000000;
+–ink-1:   #0a0a0a;
+–ink-2:   #111111;
+–ink-3:   #1c1c1e;
+–ink-4:   #2c2c2e;
+–line:    rgba(255,255,255,0.08);
+–line2:   rgba(255,255,255,0.15);
+–t1:      #f5f5f7;
+–t2:      #98989d;
+–t3:      #636366;
+–blue:    #0a84ff;
+–cyan:    #32ade6;
+–green:   #30d158;
+–purple:  #bf5af2;
+–orange:  #ff9f0a;
+–red:     #ff453a;
+–r-sm:    10px;
+–r-md:    18px;
+–r-lg:    28px;
+–r-xl:    40px;
+}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:500;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(0,0,0,0.75);backdrop-filter:saturate(180%) blur(24px);-webkit-backdrop-filter:saturate(180%) blur(24px);border-bottom:1px solid var(–border);transition:background .3s}
-.nav-logo{font-size:17px;font-weight:700;letter-spacing:-.5px;color:var(–text);text-decoration:none;display:flex;align-items:center;gap:9px}
-.nav-dot{width:7px;height:7px;border-radius:50%;background:var(–blue);box-shadow:0 0 10px var(–blue);animation:pdot 2.2s ease infinite}
-@keyframes pdot{0%,100%{box-shadow:0 0 10px var(–blue)}50%{box-shadow:0 0 22px var(–blue),0 0 44px var(–blue)}}
-.nav-links{display:flex;gap:26px;list-style:none}
-.nav-links a{font-size:13px;color:var(–text2);text-decoration:none;transition:color .2s}
-.nav-links a:hover{color:var(–text)}
-.nav-cta{background:var(–blue);color:#fff;border:none;border-radius:980px;padding:8px 20px;font-size:13px;font-weight:600;cursor:none;transition:all .2s;text-decoration:none}
-.nav-cta:hover{background:#1a90ff;box-shadow:0 0 22px rgba(10,132,255,.45)}
+/* ── UTILITIES ──────────────────────────────────── */
+.container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+.container-narrow { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+.text-center { text-align: center; }
+.section { padding: 112px 0; }
+.section-sm { padding: 72px 0; }
 
-/* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:140px 24px 100px;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 80%)}
-.hglow{position:absolute;border-radius:50%;filter:blur(90px);opacity:0;animation:gshow 2s .5s ease forwards}
-@keyframes gshow{to{opacity:1}}
-.hg1{width:750px;height:550px;top:-120px;left:50%;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(10,132,255,.16),transparent 70%)}
-.hg2{width:420px;height:420px;bottom:0;left:-80px;background:radial-gradient(ellipse,rgba(191,90,242,.09),transparent 70%)}
-.hg3{width:380px;height:380px;bottom:80px;right:-40px;background:radial-gradient(ellipse,rgba(48,209,88,.07),transparent 70%)}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(–bg2);border:1px solid var(–borderb);border-radius:980px;padding:6px 16px;font-size:12px;font-weight:500;color:var(–text2);margin-bottom:36px;animation:fup .8s ease both;position:relative;z-index:1}
-.ldot{width:6px;height:6px;border-radius:50%;background:var(–green);box-shadow:0 0 8px var(–green);animation:blink 1.6s ease infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hero h1{font-size:clamp(50px,9.5vw,116px);font-weight:900;letter-spacing:-4.5px;line-height:.93;color:var(–text);max-width:1000px;margin-bottom:26px;animation:fup .8s .1s ease both;position:relative;z-index:1}
-.acc{background:linear-gradient(135deg,#0a84ff 0%,#5ac8fa 50%,#bf5af2 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.l2{display:block;background:linear-gradient(135deg,var(–text) 30%,var(–text3) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:clamp(15px,2vw,20px);color:var(–text2);font-weight:400;max-width:540px;line-height:1.55;margin-bottom:52px;animation:fup .8s .2s ease both;position:relative;z-index:1}
-.hero-actions{display:flex;gap:14px;align-items:center;animation:fup .8s .3s ease both;position:relative;z-index:1}
-.btn-p{background:var(–blue);color:#fff;border:none;border-radius:12px;padding:16px 36px;font-size:16px;font-weight:600;cursor:none;transition:all .2s;text-decoration:none;font-family:‘Outfit’,sans-serif;letter-spacing:-.2px}
-.btn-p:hover{background:#1a90ff;box-shadow:0 0 40px rgba(10,132,255,.42),0 8px 32px rgba(10,132,255,.2);transform:translateY(-1px)}
-.btn-s{background:var(–bg2);color:var(–text2);border:1px solid var(–borderb);border-radius:12px;padding:16px 36px;font-size:16px;font-weight:500;cursor:none;transition:all .2s;text-decoration:none;font-family:‘Outfit’,sans-serif}
-.btn-s:hover{color:var(–text);border-color:rgba(255,255,255,.25);background:var(–bg3)}
-.hero-pills{display:flex;gap:10px;margin-top:64px;flex-wrap:wrap;justify-content:center;animation:fup .8s .45s ease both;position:relative;z-index:1}
-.pill{background:var(–bg2);border:1px solid var(–border);border-radius:980px;padding:8px 16px;font-size:13px;color:var(–text2);display:flex;align-items:center;gap:6px}
-@keyframes fup{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.section-label {
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–blue);
+margin-bottom: 12px;
+}
+.section-title {
+font-size: clamp(32px, 5vw, 60px);
+font-weight: 800;
+letter-spacing: -1.5px;
+line-height: 1.05;
+color: var(–t1);
+}
+.section-sub {
+font-size: 17px;
+color: var(–t2);
+line-height: 1.65;
+margin-top: 16px;
+max-width: 480px;
+}
+.section-sub.centered { margin-left: auto; margin-right: auto; text-align: center; }
 
-/* MARQUEE */
-.mq-wrap{background:var(–bg1);padding:28px 0;overflow:hidden;border-top:1px solid var(–border);border-bottom:1px solid var(–border)}
-.mq-track{display:flex;animation:mq 28s linear infinite;width:max-content}
-.mq-track:hover{animation-play-state:paused}
-.mq-item{display:flex;align-items:center;gap:10px;padding:0 40px;white-space:nowrap;font-size:14px;font-weight:500;color:var(–text3)}
-.mq-item b{color:var(–blue);font-weight:600}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* ── SCROLL REVEAL ─────────────────────────────── */
+.reveal {
+opacity: 0;
+transform: translateY(32px);
+transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal.d1 { transition-delay: 0.08s; }
+.reveal.d2 { transition-delay: 0.16s; }
+.reveal.d3 { transition-delay: 0.24s; }
+.reveal.d4 { transition-delay: 0.32s; }
 
-/* SECTIONS */
-.spad{padding:130px 24px}.spad-sm{padding:80px 24px}
-.mxw{max-width:1100px;margin:0 auto}.mxw760{max-width:760px;margin:0 auto}
-.slabel{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(–blue);margin-bottom:14px;font-family:‘JetBrains Mono’,monospace}
-.stitle{font-size:clamp(34px,5.5vw,66px);font-weight:800;letter-spacing:-2.5px;line-height:1.03;color:var(–text)}
-.ssub{font-size:17px;color:var(–text2);margin-top:18px;line-height:1.6;max-width:520px}
+/* ── NAV ─────────────────────────────────────────── */
+#nav {
+position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+height: 52px;
+display: flex; align-items: center;
+background: rgba(0,0,0,0.75);
+backdrop-filter: blur(20px) saturate(180%);
+-webkit-backdrop-filter: blur(20px) saturate(180%);
+border-bottom: 1px solid var(–line);
+transition: background 0.3s;
+}
+#nav .nav-inner {
+max-width: 1080px; margin: 0 auto; padding: 0 24px;
+display: flex; align-items: center; justify-content: space-between;
+width: 100%;
+}
+.nav-logo {
+font-size: 17px; font-weight: 800; letter-spacing: -0.5px;
+color: var(–t1); display: flex; align-items: center; gap: 8px;
+}
+.nav-logo-ring {
+width: 18px; height: 18px; border-radius: 50%;
+background: conic-gradient(var(–blue), var(–cyan), var(–green), var(–blue));
+animation: spin 6s linear infinite;
+flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-/* REVEAL */
-.rv{opacity:0;transform:translateY(36px);transition:opacity .8s cubic-bezier(.23,1,.32,1),transform .8s cubic-bezier(.23,1,.32,1)}
-.rv.ok{opacity:1;transform:translateY(0)}
-.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+.nav-links { display: flex; gap: 4px; }
+.nav-links a {
+font-size: 13px; font-weight: 500; color: var(–t2);
+padding: 6px 12px; border-radius: 8px;
+transition: color 0.2s, background 0.2s;
+}
+.nav-links a:hover { color: var(–t1); background: rgba(255,255,255,0.06); }
+.nav-btn {
+font-size: 13px; font-weight: 600; color: #fff;
+background: var(–blue); border-radius: 980px;
+padding: 8px 20px;
+transition: opacity 0.2s, box-shadow 0.2s;
+white-space: nowrap;
+}
+.nav-btn:hover { opacity: 0.88; box-shadow: 0 0 20px rgba(10,132,255,0.45); }
 
-/* WHY */
-.why-sect{background:var(–bg1)}
-.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;border-radius:28px;overflow:hidden;background:var(–border)}
-.why-item{background:var(–bg1);padding:52px 48px;transition:background .3s;position:relative;overflow:hidden}
-.why-item::after{content:’’;position:absolute;inset:0;background:linear-gradient(135deg,transparent 60%,rgba(10,132,255,.05));opacity:0;transition:opacity .3s}
-.why-item:hover{background:var(–bg2)}.why-item:hover::after{opacity:1}
-.wnum{font-size:11px;font-weight:600;letter-spacing:1px;color:var(–text3);font-family:‘JetBrains Mono’,monospace;margin-bottom:20px;text-transform:uppercase}
-.wicon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:22px;transition:transform .3s}
-.why-item:hover .wicon{transform:scale(1.1)}
-.ib{background:var(–bluedim)}.ig{background:var(–greendim)}.ip{background:var(–purpledim)}.io{background:var(–orangedim)}
-.wtitle{font-size:22px;font-weight:700;letter-spacing:-.6px;color:var(–text);margin-bottom:10px}
-.wdesc{font-size:15px;color:var(–text2);line-height:1.6}
-.why-big{grid-column:span 2;display:flex;align-items:center;justify-content:center;gap:0;background:var(–bg1)}
-.wbstat{flex:1;text-align:center;padding:40px 20px}
-.wbnum{font-size:58px;font-weight:900;letter-spacing:-3px;background:linear-gradient(135deg,#fff,rgba(255,255,255,.4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.wblabel{font-size:13px;color:var(–text3);margin-top:5px}
-.wbdiv{width:1px;height:64px;background:var(–border)}
+/* ── HERO ─────────────────────────────────────────── */
+#hero {
+min-height: 100vh;
+display: flex; flex-direction: column;
+align-items: center; justify-content: center;
+text-align: center;
+padding: 120px 24px 80px;
+position: relative; overflow: hidden;
+}
 
-/* PLANS */
-.plans-sect{background:var(–bg)}
-.tog-wrap{display:flex;justify-content:center;margin-bottom:52px}
-.tog{display:flex;background:var(–bg2);border:1px solid var(–border);border-radius:12px;padding:4px;gap:2px}
-.tog-btn{padding:8px 24px;border-radius:8px;border:none;font-size:14px;font-weight:500;cursor:none;transition:all .2s;color:var(–text2);background:transparent;font-family:‘Outfit’,sans-serif}
-.tog-btn.act{background:var(–bg4);color:var(–text)}
-.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
-.pc{background:var(–bg2);border:1px solid var(–border);border-radius:28px;padding:40px 36px;position:relative;overflow:hidden;transition:border-color .3s,transform .4s cubic-bezier(.23,1,.32,1),box-shadow .4s}
-.pc:hover{border-color:var(–borderb);transform:translateY(-4px);box-shadow:0 32px 80px rgba(0,0,0,.5)}
-.pc.feat{background:var(–bg3);border:1px solid rgba(10,132,255,.38);transform:translateY(-8px);box-shadow:0 0 0 1px rgba(10,132,255,.1),0 40px 80px rgba(0,0,0,.6)}
-.pc.feat:hover{transform:translateY(-14px);box-shadow:0 0 0 1px rgba(10,132,255,.25),0 0 80px rgba(10,132,255,.12),0 48px 80px rgba(0,0,0,.6)}
-.pc.feat::before{content:’’;position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(–blue),var(–cyan),transparent)}
-.pbadge{display:inline-flex;align-items:center;gap:5px;border-radius:980px;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;margin-bottom:28px}
-.bd{background:var(–bg3);color:var(–text3);border:1px solid var(–border)}
-.bp{background:var(–bluedim);color:var(–blue);border:1px solid rgba(10,132,255,.2)}
-.bx{background:var(–purpledim);color:var(–purple);border:1px solid rgba(191,90,242,.2)}
-.pname{font-size:32px;font-weight:800;letter-spacing:-1.2px;color:var(–text);margin-bottom:4px}
-.ptag{font-size:14px;color:var(–text3);margin-bottom:36px}
-.pdata{font-size:80px;font-weight:900;letter-spacing:-5px;line-height:1;color:var(–text)}
-.pdunit{font-size:20px;font-weight:600;color:var(–text3);margin-top:2px}
-.p5g{display:inline-flex;align-items:center;gap:4px;background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.2);color:var(–blue);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:700;letter-spacing:.8px;margin-top:10px}
-.psep{height:1px;background:var(–border);margin:28px 0}
-.pfeats{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:32px}
-.pfeats li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(–text2)}
-.fchk{width:18px;height:18px;border-radius:50%;background:var(–greendim);color:var(–green);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0}
-.pprice{font-size:48px;font-weight:900;letter-spacing:-2.5px;color:var(–text);line-height:1;margin-bottom:6px}
-.pprice sup{font-size:22px;font-weight:700;vertical-align:top;margin-top:8px;letter-spacing:0}
-.pper{font-size:13px;color:var(–text3);margin-bottom:28px}
-.pcta{display:block;width:100%;text-align:center;border-radius:12px;padding:14px;font-size:15px;font-weight:600;cursor:none;border:none;transition:all .2s;text-decoration:none;font-family:‘Outfit’,sans-serif;letter-spacing:-.1px}
-.cout{background:transparent;color:var(–text);border:1px solid var(–borderb)}
-.cout:hover{background:var(–bg3);border-color:rgba(255,255,255,.2)}
-.cblue{background:var(–blue);color:#fff}
-.cblue:hover{background:#1a90ff;box-shadow:0 0 30px rgba(10,132,255,.4)}
+/* Animated orbit lines */
+.hero-orbit {
+position: absolute; border-radius: 50%;
+border: 1px solid rgba(255,255,255,0.04);
+pointer-events: none;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+}
+.orbit-1 { width: 500px; height: 500px; }
+.orbit-2 { width: 720px; height: 720px; border-color: rgba(255,255,255,0.025); }
+.orbit-3 { width: 960px; height: 960px; border-color: rgba(255,255,255,0.015); }
 
-/* WATCH */
-.watch-card{margin-top:24px;background:var(–bg2);border:1px solid var(–border);border-radius:20px;padding:24px 28px;display:flex;align-items:center;gap:20px;transition:border-color .3s,transform .3s;max-width:720px;margin-left:auto;margin-right:auto}
-.watch-card:hover{border-color:var(–borderb);transform:translateY(-2px)}
-.wico{font-size:38px}
-.winfo{flex:1}
-.wtit{font-size:16px;font-weight:700;color:var(–text);letter-spacing:-.3px}
-.wsub{font-size:13px;color:var(–text2);margin-top:4px;line-height:1.5}
-.wprice{font-size:24px;font-weight:900;color:var(–text);letter-spacing:-1px;white-space:nowrap;text-align:right}
-.wprice span{font-size:12px;color:var(–text3);font-weight:400;display:block}
+/* Satellite dots on orbits */
+.sat-dot {
+position: absolute; width: 5px; height: 5px; border-radius: 50%;
+background: var(–blue); box-shadow: 0 0 8px var(–blue);
+top: 50%; left: 50%;
+}
+.sat-dot:nth-child(1) { animation: orbit-a 9s linear infinite; }
+.sat-dot:nth-child(2) { animation: orbit-b 13s linear infinite; background: var(–cyan); box-shadow: 0 0 8px var(–cyan); }
+.sat-dot:nth-child(3) { animation: orbit-c 18s linear infinite; background: var(–green); box-shadow: 0 0 8px var(–green); }
 
-/* ESIM */
-.esim-sect{background:var(–bg1)}
-.esim-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.esteps{display:flex;flex-direction:column}
-.estep{display:flex;gap:20px;padding:28px 0;border-bottom:1px solid var(–border)}
-.estep:last-child{border-bottom:none}
-.snum{width:36px;height:36px;border-radius:10px;flex-shrink:0;background:var(–bg3);border:1px solid var(–border);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(–text3);font-family:‘JetBrains Mono’,monospace}
-.stit{font-size:16px;font-weight:600;color:var(–text);margin-bottom:4px}
-.sdesc{font-size:14px;color:var(–text2);line-height:1.5}
-.esim-vis{display:flex;align-items:center;justify-content:center;position:relative}
-.esim-glow{position:absolute;inset:-60px;background:radial-gradient(ellipse,rgba(10,132,255,.08),transparent 70%);pointer-events:none}
-.ephone{width:220px;height:440px;background:var(–bg2);border:1px solid var(–borderb);border-radius:44px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;box-shadow:0 40px 120px rgba(0,0,0,.85);animation:flt 4s ease-in-out infinite}
-@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-.enotch{position:absolute;top:14px;width:90px;height:28px;background:var(–bg);border-radius:20px}
-.esc{text-align:center;padding:0 20px}
-.eqr{width:80px;height:80px;background:var(–bg3);border-radius:12px;margin:0 auto 12px;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;padding:8px}
-.qdot{border-radius:2px}.qb{background:var(–text)}.qw{background:transparent}
-.elabel{font-size:13px;font-weight:600;color:var(–text)}.esublabel{font-size:11px;color:var(–text3);margin-top:3px}
-.ehome{position:absolute;bottom:10px;width:100px;height:4px;background:var(–bg4);border-radius:4px}
+@keyframes orbit-a {
+from { transform: translate(-50%,-50%) rotate(0deg) translateX(250px) rotate(0deg); }
+to   { transform: translate(-50%,-50%) rotate(360deg) translateX(250px) rotate(-360deg); }
+}
+@keyframes orbit-b {
+from { transform: translate(-50%,-50%) rotate(120deg) translateX(360px) rotate(-120deg); }
+to   { transform: translate(-50%,-50%) rotate(480deg) translateX(360px) rotate(-480deg); }
+}
+@keyframes orbit-c {
+from { transform: translate(-50%,-50%) rotate(240deg) translateX(480px) rotate(-240deg); }
+to   { transform: translate(-50%,-50%) rotate(600deg) translateX(480px) rotate(-600deg); }
+}
 
-/* COVERAGE */
-.cov-sect{background:var(–bg)}
-.cov-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;border-radius:24px;overflow:hidden;background:var(–border);margin-top:72px}
-.cov-item{background:var(–bg1);padding:48px 40px;text-align:center}
-.cov-num{font-size:64px;font-weight:900;letter-spacing:-3px;line-height:1;background:linear-gradient(135deg,#fff,rgba(255,255,255,.4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.cov-lbl{font-size:14px;color:var(–text3);margin-top:6px}
-.nbadges{display:flex;gap:10px;justify-content:center;margin-top:48px;flex-wrap:wrap}
-.nbadge{background:var(–bg2);border:1px solid var(–border);border-radius:10px;padding:12px 20px;font-size:14px;font-weight:600;color:var(–text2);display:flex;align-items:center;gap:8px}
-.nd{width:6px;height:6px;border-radius:50%}
-.ndb{background:var(–blue);box-shadow:0 0 8px var(–blue)}.ndg{background:var(–green);box-shadow:0 0 8px var(–green)}
+/* Radial glow */
+.hero-glow {
+position: absolute; inset: 0; pointer-events: none;
+background: radial-gradient(ellipse 60% 50% at 50% 30%,
+rgba(10,132,255,0.14) 0%, transparent 70%);
+}
 
-/* COMPARE */
-.cmp-sect{background:var(–bg1)}
-.cmp-tbl{width:100%;border-collapse:collapse;border-radius:20px;overflow:hidden}
-.cmp-tbl th,.cmp-tbl td{padding:18px 24px;text-align:center;font-size:14px;border-bottom:1px solid var(–border)}
-.cmp-tbl thead th{background:var(–bg2);font-weight:700;color:var(–text);font-size:15px;letter-spacing:-.3px}
-.cmp-tbl thead th:first-child,.cmp-tbl td:first-child{text-align:left}
-.cmp-tbl td:first-child{color:var(–text2)}
-.cmp-tbl tbody tr{background:var(–bg1);transition:background .2s}
-.cmp-tbl tbody tr:hover{background:var(–bg2)}
-.cnx{color:var(–blue);font-weight:700}.cot{color:var(–text3)}
-.cy{color:var(–green);font-size:16px}.cn{color:var(–red);font-size:16px}
-.chl{background:rgba(10,132,255,.04)!important}
+.hero-eyebrow {
+display: inline-flex; align-items: center; gap: 8px;
+background: var(–ink-3); border: 1px solid var(–line2);
+border-radius: 980px; padding: 6px 16px;
+font-size: 12px; font-weight: 600; color: var(–t2);
+letter-spacing: 0.2px; margin-bottom: 32px;
+position: relative; z-index: 1;
+animation: fadeUp 0.8s ease both;
+}
+.eyebrow-dot {
+width: 6px; height: 6px; border-radius: 50%;
+background: var(–green); box-shadow: 0 0 8px var(–green);
+animation: blink 2s ease infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-/* TESTIMONIALS */
-.tst-sect{background:var(–bg)}
-.tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.tcard{background:var(–bg2);border:1px solid var(–border);border-radius:20px;padding:32px 28px;transition:border-color .3s,transform .3s}
-.tcard:hover{border-color:var(–borderb);transform:translateY(-3px)}
-.stars{font-size:14px;margin-bottom:16px;letter-spacing:2px;color:var(–orange)}
-.ttext{font-size:15px;color:var(–text2);line-height:1.6;margin-bottom:20px;font-style:italic}
-.tauthor{display:flex;align-items:center;gap:12px}
-.tav{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;flex-shrink:0}
-.avb{background:linear-gradient(135deg,#0a84ff,#5ac8fa)}.avg{background:linear-gradient(135deg,#30d158,#34c759)}.avp{background:linear-gradient(135deg,#bf5af2,#9966ff)}
-.tname{font-size:14px;font-weight:600;color:var(–text)}.trole{font-size:12px;color:var(–text3)}
+.hero-h1 {
+font-size: clamp(48px, 9.5vw, 110px);
+font-weight: 900; letter-spacing: -4px; line-height: 0.95;
+position: relative; z-index: 1;
+animation: fadeUp 0.8s 0.1s ease both;
+}
+.hero-h1 span.g {
+background: linear-gradient(120deg, var(–blue) 0%, var(–cyan) 40%, var(–green) 100%);
+-webkit-background-clip: text; -webkit-text-fill-color: transparent;
+background-clip: text;
+}
 
-/* FAQ */
-.faq-sect{background:var(–bg1)}
-.fitem{border-bottom:1px solid var(–border)}
-.fq{display:flex;align-items:center;justify-content:space-between;padding:22px 0;font-size:16px;font-weight:500;color:var(–text);cursor:none;gap:20px;user-select:none;transition:color .2s}
-.fq:hover{color:var(–blue)}
-.fic{width:26px;height:26px;border-radius:50%;background:var(–bg3);border:1px solid var(–border);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(–text3);transition:transform .3s,background .2s;flex-shrink:0}
-.fitem.op .fic{transform:rotate(45deg);background:var(–blue);color:#fff;border-color:var(–blue)}
-.fa{font-size:14px;color:var(–text2);line-height:1.7;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
-.fitem.op .fa{max-height:300px;padding-bottom:22px}
+.hero-p {
+font-size: 19px; font-weight: 400; color: var(–t2);
+max-width: 520px; line-height: 1.6;
+margin: 24px auto 0;
+position: relative; z-index: 1;
+animation: fadeUp 0.8s 0.2s ease both;
+}
 
-/* CGV */
-.cgv-sect{background:var(–bg)}
-.cgv-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;border-radius:20px;overflow:hidden;background:var(–border)}
-.cgv-item{background:var(–bg1);padding:36px 32px}
-.cgtit{font-size:16px;font-weight:700;color:var(–text);margin-bottom:12px;letter-spacing:-.3px}
-.cgtext{font-size:13px;color:var(–text3);line-height:1.7}
-.cgtext strong{color:var(–text2)}
+.hero-actions {
+display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+margin-top: 44px;
+position: relative; z-index: 1;
+animation: fadeUp 0.8s 0.3s ease both;
+}
+.btn-primary {
+display: inline-flex; align-items: center; gap: 6px;
+background: var(–blue); color: #fff;
+font-size: 16px; font-weight: 600; border-radius: 14px;
+padding: 15px 32px; border: none; cursor: pointer;
+transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); box-shadow: 0 12px 32px rgba(10,132,255,0.35); }
+.btn-ghost {
+display: inline-flex; align-items: center; gap: 6px;
+background: transparent; color: var(–t1);
+font-size: 16px; font-weight: 600; border-radius: 14px;
+padding: 15px 32px; border: 1px solid var(–line2); cursor: pointer;
+transition: background 0.2s, border-color 0.2s;
+}
+.btn-ghost:hover { background: var(–ink-3); border-color: rgba(255,255,255,0.25); }
 
-/* LEGAL */
-.leg-sect{background:var(–bg1);padding:48px 24px}
-.leg-inner{max-width:1100px;margin:0 auto}
-.leg-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-bottom:28px;border-bottom:1px solid var(–border);margin-bottom:28px}
-.leg-links{display:flex;gap:20px;flex-wrap:wrap}
-.leg-links a{font-size:12px;color:var(–text3);text-decoration:none;transition:color .2s}
-.leg-links a:hover{color:var(–text2)}
-.leg-logo{font-size:16px;font-weight:700;color:var(–text3)}
-.leg-text{font-size:11px;color:var(–text3);line-height:1.7}
+/* Stats bar */
+.hero-stats {
+display: flex; gap: 0; justify-content: center;
+margin-top: 72px;
+border: 1px solid var(–line); border-radius: var(–r-lg);
+overflow: hidden; background: var(–ink-2);
+position: relative; z-index: 1;
+animation: fadeUp 0.8s 0.4s ease both;
+}
+.hstat {
+flex: 1; padding: 24px 32px; text-align: center;
+border-right: 1px solid var(–line);
+}
+.hstat:last-child { border-right: none; }
+.hstat-n {
+font-size: 36px; font-weight: 900; letter-spacing: -1.5px;
+color: var(–t1); line-height: 1;
+}
+.hstat-l { font-size: 12px; color: var(–t3); margin-top: 4px; }
 
-/* FOOTER */
-footer{background:var(–bg);border-top:1px solid var(–border);padding:72px 48px 40px}
-.foot-inner{max-width:1100px;margin:0 auto}
-.foot-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:64px}
-.fbn{font-size:22px;font-weight:800;letter-spacing:-.8px;color:var(–text);margin-bottom:12px}
-.fbd{font-size:13px;color:var(–text3);line-height:1.6;max-width:240px}
-.fcol h4{font-size:12px;font-weight:700;color:var(–text2);letter-spacing:.5px;text-transform:uppercase;margin-bottom:18px}
-.fcol ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-.fcol a{font-size:13px;color:var(–text3);text-decoration:none;transition:color .2s}
-.fcol a:hover{color:var(–text)}
-.foot-bot{display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid var(–border);font-size:12px;color:var(–text3)}
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(24px); }
+to   { opacity: 1; transform: translateY(0); }
+}
 
-/* RESPONSIVE */
-@media(max-width:900px){
-nav{padding:0 20px}.nav-links{display:none}
-.plans-grid,.tst-grid,.cgv-grid{grid-template-columns:1fr}
-.pc.feat{transform:none}
-.why-grid{grid-template-columns:1fr}
-.why-big{flex-direction:column;gap:0}
-.wbstat{padding:24px 16px}
-.esim-inner{grid-template-columns:1fr}.esim-vis{display:none}
-.cov-grid{grid-template-columns:1fr}
-.cmp-sect{display:none}
-.foot-top{grid-template-columns:1fr 1fr}
-.foot-bot{flex-direction:column;gap:8px;text-align:center}
-body{cursor:auto}.cur,.cur-ring{display:none}
+/* ── WHY ─────────────────────────────────────────── */
+#why { background: var(–ink-1); }
+.why-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 2px;
+border-radius: var(–r-lg);
+overflow: hidden;
+background: var(–line);
+margin-top: 64px;
+}
+.why-card {
+background: var(–ink-1);
+padding: 48px 44px;
+transition: background 0.25s;
+}
+.why-card:hover { background: var(–ink-2); }
+.why-card-icon {
+width: 48px; height: 48px; border-radius: 14px;
+display: flex; align-items: center; justify-content: center;
+font-size: 22px; margin-bottom: 20px;
+flex-shrink: 0;
+}
+.ic-b { background: rgba(10,132,255,0.14); }
+.ic-g { background: rgba(48,209,88,0.12); }
+.ic-p { background: rgba(191,90,242,0.12); }
+.ic-o { background: rgba(255,159,10,0.12); }
+.ic-c { background: rgba(50,173,230,0.12); }
+.ic-r { background: rgba(255,159,10,0.12); }
+
+.why-card h3 {
+font-size: 20px; font-weight: 700; letter-spacing: -0.4px;
+color: var(–t1); margin-bottom: 8px;
+}
+.why-card p { font-size: 15px; color: var(–t2); line-height: 1.6; }
+.why-card-wide {
+grid-column: span 2;
+display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+background: var(–ink-1);
+}
+.why-stat {
+padding: 40px 32px; text-align: center;
+border-right: 1px solid var(–line);
+}
+.why-stat:last-child { border-right: none; }
+.why-stat-n {
+font-size: 52px; font-weight: 900; letter-spacing: -2.5px;
+background: linear-gradient(135deg, #fff 40%, rgba(255,255,255,0.35));
+-webkit-background-clip: text; -webkit-text-fill-color: transparent;
+background-clip: text; line-height: 1;
+}
+.why-stat-l { font-size: 12px; color: var(–t3); margin-top: 6px; }
+
+/* ── PLANS ───────────────────────────────────────── */
+#plans { background: var(–black); }
+
+.billing-toggle {
+display: inline-flex; align-items: center;
+background: var(–ink-3); border: 1px solid var(–line);
+border-radius: 12px; padding: 4px; gap: 2px;
+margin: 48px auto 64px;
+}
+.billing-toggle button {
+padding: 8px 22px; border-radius: 9px; border: none;
+font-size: 14px; font-weight: 600; font-family: inherit;
+cursor: pointer; transition: all 0.2s; color: var(–t2); background: transparent;
+}
+.billing-toggle button.active {
+background: var(–ink-4); color: var(–t1);
+}
+.billing-toggle .save-tag {
+font-size: 10px; color: var(–green);
+margin-left: 4px; font-weight: 700;
+}
+
+.plans-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 16px;
+align-items: start;
+}
+
+.plan-card {
+background: var(–ink-2);
+border: 1px solid var(–line);
+border-radius: var(–r-lg);
+padding: 36px 32px 32px;
+position: relative;
+overflow: hidden;
+transition: border-color 0.3s, transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s;
+}
+.plan-card:hover {
+border-color: var(–line2);
+transform: translateY(-4px);
+box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+}
+.plan-card.featured {
+background: var(–ink-3);
+border-color: rgba(10,132,255,0.35);
+transform: translateY(-6px);
+box-shadow: 0 0 0 1px rgba(10,132,255,0.1), 0 32px 64px rgba(0,0,0,0.7);
+}
+.plan-card.featured:hover {
+transform: translateY(-12px);
+box-shadow: 0 0 0 1px rgba(10,132,255,0.25), 0 0 60px rgba(10,132,255,0.1), 0 40px 80px rgba(0,0,0,0.7);
+}
+.plan-card.featured::after {
+content: ‘’;
+position: absolute; top: 0; left: 0; right: 0; height: 2px;
+background: linear-gradient(90deg, transparent 0%, var(–blue) 30%, var(–cyan) 70%, transparent 100%);
+}
+
+.plan-pill {
+display: inline-block;
+font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+text-transform: uppercase; border-radius: 980px;
+padding: 4px 12px; margin-bottom: 24px;
+}
+.pp-gray { background: var(–ink-4); color: var(–t3); }
+.pp-blue { background: rgba(10,132,255,0.15); color: var(–blue); }
+.pp-purple { background: rgba(191,90,242,0.15); color: var(–purple); }
+
+.plan-name {
+font-size: 28px; font-weight: 800; letter-spacing: -0.8px;
+color: var(–t1); margin-bottom: 2px;
+}
+.plan-subtitle { font-size: 14px; color: var(–t3); margin-bottom: 28px; }
+
+.plan-data { font-size: 72px; font-weight: 900; letter-spacing: -4px; line-height: 1; color: var(–t1); }
+.plan-data-unit { font-size: 17px; color: var(–t3); margin-top: 2px; }
+.plan-badge-5g {
+display: inline-flex; align-items: center; gap: 4px;
+font-size: 11px; font-weight: 800; letter-spacing: 1px;
+color: var(–blue); background: rgba(10,132,255,0.1);
+border: 1px solid rgba(10,132,255,0.2);
+border-radius: 6px; padding: 3px 8px; margin-top: 10px;
+}
+
+.plan-sep { height: 1px; background: var(–line); margin: 24px 0; }
+
+.plan-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.plan-features li {
+display: flex; align-items: center; gap: 10px;
+font-size: 14px; color: var(–t2);
+}
+.feat-tick {
+width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+background: rgba(48,209,88,0.12); color: var(–green);
+display: flex; align-items: center; justify-content: center;
+font-size: 9px; font-weight: 900;
+}
+
+.plan-price-row { margin-bottom: 6px; }
+.plan-price {
+font-size: 46px; font-weight: 900; letter-spacing: -2px;
+color: var(–t1); line-height: 1;
+}
+.plan-price sup { font-size: 20px; font-weight: 700; vertical-align: top; margin-top: 7px; }
+.plan-per { font-size: 13px; color: var(–t3); margin-bottom: 24px; }
+
+.plan-cta {
+display: block; width: 100%; text-align: center;
+padding: 13px; border-radius: 12px;
+font-size: 15px; font-weight: 700; font-family: inherit;
+cursor: pointer; border: none; transition: all 0.2s;
+}
+.cta-outline {
+background: transparent; color: var(–t1);
+border: 1px solid var(–line2);
+}
+.cta-outline:hover { background: var(–ink-3); }
+.cta-solid { background: var(–blue); color: #fff; }
+.cta-solid:hover { background: #1a8fff; box-shadow: 0 8px 24px rgba(10,132,255,0.4); }
+
+/* Watch add-on */
+.watch-addon {
+display: flex; align-items: center; gap: 20px;
+background: var(–ink-2); border: 1px solid var(–line);
+border-radius: var(–r-lg); padding: 24px 28px;
+margin-top: 20px; max-width: 720px; margin-left: auto; margin-right: auto;
+transition: border-color 0.3s;
+}
+.watch-addon:hover { border-color: var(–line2); }
+.watch-emoji { font-size: 40px; flex-shrink: 0; }
+.watch-text { flex: 1; }
+.watch-text h4 { font-size: 16px; font-weight: 700; color: var(–t1); margin-bottom: 4px; }
+.watch-text p { font-size: 13px; color: var(–t2); line-height: 1.5; }
+.watch-price { font-size: 26px; font-weight: 900; color: var(–t1); flex-shrink: 0; }
+.watch-price span { font-size: 12px; color: var(–t3); font-weight: 400; display: block; text-align: right; }
+
+/* ── SATELLITE ───────────────────────────────────── */
+#satellite { background: var(–black); overflow: hidden; }
+.sat-visual {
+position: relative; margin: 64px 0 0; height: 360px;
+display: flex; align-items: center; justify-content: center;
+}
+.sat-earth {
+width: 200px; height: 200px; border-radius: 50%;
+background: radial-gradient(circle at 35% 35%, #1a6b4a 0%, #0a3d62 40%, #050d1f 100%);
+box-shadow: 0 0 60px rgba(10,60,120,0.6), inset 0 0 40px rgba(0,0,0,0.5);
+position: relative; z-index: 2;
+flex-shrink: 0;
+}
+.sat-orbit-svg {
+position: absolute; inset: 0; width: 100%; height: 100%;
+}
+.sat-orbit-path {
+fill: none; stroke: rgba(10,132,255,0.12); stroke-width: 1;
+}
+.sat-dot-anim {
+fill: var(–blue); filter: drop-shadow(0 0 5px var(–blue));
+}
+.sat-text {
+margin-top: 28px; text-align: center;
+font-size: 14px; color: var(–t2); line-height: 1.7;
+}
+
+/* ── COVERAGE MAP ────────────────────────────────── */
+#coverage { background: var(–ink-1); }
+.cov-inner {
+display: grid; grid-template-columns: 1fr 1fr;
+gap: 64px; align-items: center; margin-top: 64px;
+}
+.cov-map {
+background: var(–ink-2); border: 1px solid var(–line);
+border-radius: var(–r-lg); padding: 32px;
+aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+position: relative; overflow: hidden;
+}
+/* Simple Europe SVG map */
+.europe-svg { width: 100%; height: 100%; opacity: 0.9; }
+
+.cov-list { display: flex; flex-direction: column; gap: 16px; }
+.cov-item {
+display: flex; align-items: center; gap: 14px;
+background: var(–ink-2); border: 1px solid var(–line);
+border-radius: var(–r-md); padding: 16px 20px;
+transition: border-color 0.2s;
+}
+.cov-item:hover { border-color: var(–line2); }
+.cov-icon {
+width: 40px; height: 40px; border-radius: 11px;
+display: flex; align-items: center; justify-content: center;
+font-size: 20px; flex-shrink: 0;
+}
+.cov-item h4 { font-size: 15px; font-weight: 600; color: var(–t1); margin-bottom: 2px; }
+.cov-item p { font-size: 13px; color: var(–t2); }
+
+/* ── COMPARISON ──────────────────────────────────── */
+#compare { background: var(–black); }
+.compare-wrap {
+margin-top: 64px;
+border: 1px solid var(–line); border-radius: var(–r-lg); overflow: hidden;
+}
+.compare-table { width: 100%; border-collapse: collapse; }
+.compare-table th {
+padding: 18px 24px; background: var(–ink-2);
+font-size: 14px; font-weight: 700; color: var(–t1); text-align: center;
+border-bottom: 1px solid var(–line);
+}
+.compare-table th:first-child { text-align: left; }
+.compare-table td {
+padding: 16px 24px; font-size: 14px; color: var(–t2);
+text-align: center; border-bottom: 1px solid var(–line);
+}
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table td:first-child { text-align: left; color: var(–t2); }
+.compare-table tbody tr { transition: background 0.2s; }
+.compare-table tbody tr:hover { background: var(–ink-2); }
+.col-nexa { color: var(–blue) !important; font-weight: 700; }
+.col-gray { color: var(–t3) !important; }
+.col-highlight { background: rgba(10,132,255,0.04); }
+.icon-yes { color: var(–green); font-weight: 900; }
+.icon-no { color: var(–red); }
+
+/* ── ESIM ────────────────────────────────────────── */
+#esim { background: var(–ink-1); }
+.esim-inner {
+display: grid; grid-template-columns: 1fr 1fr;
+gap: 80px; align-items: center; margin-top: 64px;
+}
+.esim-steps { display: flex; flex-direction: column; gap: 0; }
+.esim-step {
+display: flex; gap: 20px; padding: 24px 0;
+border-bottom: 1px solid var(–line);
+}
+.esim-step:last-child { border-bottom: none; }
+.step-num {
+width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+background: var(–ink-3); border: 1px solid var(–line);
+display: flex; align-items: center; justify-content: center;
+font-size: 12px; font-weight: 800; color: var(–t3);
+font-variant-numeric: tabular-nums;
+}
+.esim-step h4 { font-size: 15px; font-weight: 700; color: var(–t1); margin-bottom: 3px; }
+.esim-step p { font-size: 13px; color: var(–t2); line-height: 1.5; }
+
+/* Phone mock */
+.phone-mock {
+width: 200px; height: 400px;
+background: var(–ink-2); border: 1.5px solid var(–line2);
+border-radius: 40px; margin: 0 auto;
+display: flex; flex-direction: column; align-items: center;
+justify-content: center; gap: 14px;
+box-shadow: 0 40px 100px rgba(0,0,0,0.85);
+position: relative; overflow: hidden;
+animation: float 4s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+.phone-notch {
+position: absolute; top: 12px;
+width: 80px; height: 24px;
+background: var(–black); border-radius: 16px;
+}
+.phone-qr {
+width: 88px; height: 88px;
+background: var(–t1); border-radius: 10px;
+display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; padding: 8px;
+}
+.qpx { border-radius: 1px; }
+.qpx.on { background: #000; }
+.qpx.off { background: transparent; }
+.phone-label { font-size: 11px; font-weight: 600; color: var(–t1); }
+.phone-sub { font-size: 10px; color: var(–t3); }
+.phone-bar { position: absolute; bottom: 10px; width: 80px; height: 4px; background: var(–ink-4); border-radius: 4px; }
+
+/* ── TESTIMONIALS ────────────────────────────────── */
+#testimonials { background: var(–black); }
+.testi-grid {
+display: grid; grid-template-columns: repeat(3,1fr);
+gap: 16px; margin-top: 64px;
+}
+.testi-card {
+background: var(–ink-2); border: 1px solid var(–line);
+border-radius: var(–r-lg); padding: 28px 24px;
+transition: border-color 0.25s, transform 0.25s;
+}
+.testi-card:hover { border-color: var(–line2); transform: translateY(-3px); }
+.testi-stars { color: var(–orange); font-size: 13px; letter-spacing: 2px; margin-bottom: 14px; }
+.testi-text { font-size: 15px; color: var(–t2); line-height: 1.65; margin-bottom: 20px; font-style: italic; }
+.testi-author { display: flex; align-items: center; gap: 12px; }
+.testi-avatar {
+width: 36px; height: 36px; border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.av1 { background: linear-gradient(135deg,#0a84ff,#32ade6); }
+.av2 { background: linear-gradient(135deg,#30d158,#34c759); }
+.av3 { background: linear-gradient(135deg,#bf5af2,#af52de); }
+.testi-name { font-size: 14px; font-weight: 700; color: var(–t1); }
+.testi-role { font-size: 12px; color: var(–t3); }
+
+/* ── FAQ ─────────────────────────────────────────── */
+#faq { background: var(–ink-1); }
+.faq-list { margin-top: 56px; }
+.faq-item { border-bottom: 1px solid var(–line); }
+.faq-btn {
+width: 100%; display: flex; align-items: center; justify-content: space-between;
+gap: 20px; padding: 20px 0;
+background: none; border: none; cursor: pointer; font-family: inherit;
+text-align: left;
+}
+.faq-q { font-size: 16px; font-weight: 600; color: var(–t1); transition: color 0.2s; }
+.faq-btn:hover .faq-q { color: var(–blue); }
+.faq-icon {
+width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+background: var(–ink-3); border: 1px solid var(–line);
+display: flex; align-items: center; justify-content: center;
+font-size: 14px; color: var(–t3);
+transition: transform 0.3s, background 0.2s, color 0.2s;
+}
+.faq-item.open .faq-icon {
+transform: rotate(45deg); background: var(–blue); color: #fff; border-color: var(–blue);
+}
+.faq-answer {
+font-size: 14px; color: var(–t2); line-height: 1.7;
+max-height: 0; overflow: hidden;
+transition: max-height 0.38s cubic-bezier(0.16,1,0.3,1), padding 0.3s;
+}
+.faq-item.open .faq-answer { max-height: 240px; padding-bottom: 20px; }
+
+/* ── CGV ─────────────────────────────────────────── */
+#cgv { background: var(–black); }
+.cgv-grid {
+display: grid; grid-template-columns: repeat(2,1fr);
+gap: 2px; border-radius: var(–r-lg);
+overflow: hidden; background: var(–line); margin-top: 64px;
+}
+.cgv-card {
+background: var(–ink-1); padding: 32px 28px;
+transition: background 0.2s;
+}
+.cgv-card:hover { background: var(–ink-2); }
+.cgv-card h4 { font-size: 15px; font-weight: 700; color: var(–t1); margin-bottom: 10px; }
+.cgv-card p { font-size: 13px; color: var(–t3); line-height: 1.7; }
+.cgv-card p strong { color: var(–t2); }
+
+/* ── LEGAL STRIP ─────────────────────────────────── */
+#legal {
+background: var(–ink-1);
+border-top: 1px solid var(–line);
+padding: 40px 0;
+}
+.legal-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+.legal-logo { font-size: 15px; font-weight: 800; color: var(–t3); white-space: nowrap; }
+.legal-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.legal-links a { font-size: 12px; color: var(–t3); transition: color 0.2s; }
+.legal-links a:hover { color: var(–t2); }
+.legal-note { font-size: 11px; color: var(–t3); line-height: 1.7; max-width: 640px; }
+
+/* ── FOOTER ──────────────────────────────────────── */
+footer {
+background: var(–black); border-top: 1px solid var(–line);
+padding: 64px 0 40px;
+}
+.footer-grid {
+display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+gap: 40px; margin-bottom: 56px;
+}
+.footer-brand-name { font-size: 20px; font-weight: 800; color: var(–t1); margin-bottom: 10px; }
+.footer-brand-desc { font-size: 13px; color: var(–t3); line-height: 1.6; max-width: 220px; }
+.footer-col h5 {
+font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+text-transform: uppercase; color: var(–t2); margin-bottom: 16px;
+}
+.footer-col ul { display: flex; flex-direction: column; gap: 9px; }
+.footer-col a { font-size: 13px; color: var(–t3); transition: color 0.2s; }
+.footer-col a:hover { color: var(–t1); }
+.footer-bottom {
+display: flex; align-items: center; justify-content: space-between;
+padding-top: 24px; border-top: 1px solid var(–line);
+font-size: 12px; color: var(–t3);
+}
+
+/* ── MARQUEE ─────────────────────────────────────── */
+.marquee-outer {
+background: var(–ink-2); border-top: 1px solid var(–line); border-bottom: 1px solid var(–line);
+padding: 18px 0; overflow: hidden;
+}
+.marquee-track {
+display: flex; gap: 0; animation: mq 30s linear infinite; width: max-content;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.mq-item {
+display: flex; align-items: center; gap: 8px; padding: 0 36px;
+font-size: 13px; font-weight: 500; color: var(–t3); white-space: nowrap;
+}
+.mq-item b { color: var(–t2); font-weight: 600; }
+.mq-dot { color: var(–blue); font-size: 6px; }
+@keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ── RESPONSIVE ─────────────────────────────────── */
+@media (max-width: 768px) {
+.nav-links { display: none; }
+#nav .nav-inner { padding: 0 20px; }
+.hero-stats { display: grid; grid-template-columns: repeat(2,1fr); }
+.hstat { border-right: none; border-bottom: 1px solid var(–line); }
+.hstat:nth-child(odd) { border-right: 1px solid var(–line); }
+.hstat:last-child, .hstat:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+.why-grid { grid-template-columns: 1fr; }
+.why-card-wide { grid-column: span 1; grid-template-columns: repeat(2,1fr); }
+.why-stat:nth-child(odd) { border-right: 1px solid var(–line); }
+.why-stat { border-right: none; border-bottom: 1px solid var(–line); }
+.why-stat:last-child { border-bottom: none; }
+.plans-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+.plan-card.featured { transform: none; }
+.cov-inner { grid-template-columns: 1fr; }
+.esim-inner { grid-template-columns: 1fr; }
+.phone-mock { display: none; }
+.testi-grid { grid-template-columns: 1fr; }
+.cgv-grid { grid-template-columns: 1fr; }
+.footer-grid { grid-template-columns: 1fr 1fr; }
+.footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+.legal-inner { flex-direction: column; gap: 20px; }
+.compare-wrap { overflow-x: auto; }
 }
 </style>
 
 </head>
 <body>
 
-<div class="cur" id="cur"></div>
-<div class="cur-ring" id="ring"></div>
-
 <!-- NAV -->
 
 <nav id="nav">
-  <a href="#" class="nav-logo"><div class="nav-dot"></div>NexaMobile</a>
-  <ul class="nav-links">
-    <li><a href="#why">Pourquoi nous</a></li>
-    <li><a href="#plans">Forfaits</a></li>
-    <li><a href="#esim">eSIM</a></li>
-    <li><a href="#reseau">Réseau</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#cgv">CGV</a></li>
-  </ul>
-  <a href="#plans" class="nav-cta">Commencer →</a>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-ring"></div>
+      NexaMobile
+    </a>
+    <div class="nav-links">
+      <a href="#why">Pourquoi nous</a>
+      <a href="#plans">Forfaits</a>
+      <a href="#satellite">Satellite</a>
+      <a href="#coverage">Couverture</a>
+      <a href="#esim">eSIM</a>
+      <a href="#faq">FAQ</a>
+      <a href="#cgv">CGV</a>
+    </div>
+    <a href="#plans" class="nav-btn">Commencer →</a>
+  </div>
 </nav>
 
 <!-- HERO -->
 
-<section class="hero">
-  <div class="hero-bg">
-    <div class="hero-grid"></div>
-    <div class="hglow hg1"></div><div class="hglow hg2"></div><div class="hglow hg3"></div>
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-orbit orbit-1"></div>
+  <div class="hero-orbit orbit-2"></div>
+  <div class="hero-orbit orbit-3"></div>
+  <div class="sat-dot"></div>
+  <div class="sat-dot"></div>
+  <div class="sat-dot"></div>
+
+  <div class="hero-eyebrow">
+    <div class="eyebrow-dot"></div>
+    Réseau satellitaire · Couverture totale Europe
   </div>
-  <div class="hero-eyebrow"><div class="ldot"></div>Réseau 5G actif · eSIM instantanée</div>
-  <h1>La 5G. <span class="acc">Librement.</span><span class="l2">Sans limite.</span></h1>
-  <p class="hero-sub">Un opérateur 100% eSIM, sans engagement, avec appels et SMS illimités sur chaque forfait. Activé en 2 minutes, depuis n'importe où.</p>
+
+  <h1 class="hero-h1">
+    La 5G<br><span class="g">partout.</span><br>Vraiment.
+  </h1>
+
+  <p class="hero-p">
+    NexaMobile est le premier opérateur 100% eSIM sur réseau satellitaire. Vous captez partout en Europe — en ville, en montagne, en mer. Sans engagement, dès 6,99 €/mois.
+  </p>
+
   <div class="hero-actions">
-    <a href="#plans" class="btn-p">Voir les forfaits</a>
-    <a href="#why" class="btn-s">Pourquoi NexaMobile</a>
+    <a href="#plans" class="btn-primary">Découvrir les forfaits</a>
+    <a href="#satellite" class="btn-ghost">Comment ça marche</a>
   </div>
-  <div class="hero-pills">
-    <div class="pill">✦ Sans engagement</div>
-    <div class="pill">⚡ 5G incluse</div>
-    <div class="pill">📱 eSIM gratuite</div>
-    <div class="pill">∞ Appels &amp; SMS illimités</div>
-    <div class="pill">🇪🇺 Roaming Europe</div>
-    <div class="pill">⌚ Option montre</div>
+
+  <div class="hero-stats">
+    <div class="hstat">
+      <div class="hstat-n" id="sc1">0</div>
+      <div class="hstat-l">pays couverts</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-n">100%</div>
+      <div class="hstat-l">couverture Europe</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-n">2s</div>
+      <div class="hstat-l">activation eSIM</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-n">0 €</div>
+      <div class="hstat-l">frais d'activation</div>
+    </div>
   </div>
 </section>
 
 <!-- MARQUEE -->
 
-<div class="mq-wrap">
-  <div class="mq-track" id="mq">
-    <div class="mq-item">⚡ 5G <b>ultra-rapide</b></div><div class="mq-item">📱 eSIM <b>gratuite</b></div>
-    <div class="mq-item">∞ Appels <b>illimités</b></div><div class="mq-item">✦ Sans <b>engagement</b></div>
-    <div class="mq-item">🇪🇺 Roaming <b>Europe inclus</b></div><div class="mq-item">⌚ Option <b>Montre +2€</b></div>
-    <div class="mq-item">🔒 Zéro <b>frais caché</b></div><div class="mq-item">🚀 Activation <b>instantanée</b></div>
-    <div class="mq-item">⚡ 5G <b>ultra-rapide</b></div><div class="mq-item">📱 eSIM <b>gratuite</b></div>
-    <div class="mq-item">∞ Appels <b>illimités</b></div><div class="mq-item">✦ Sans <b>engagement</b></div>
-    <div class="mq-item">🇪🇺 Roaming <b>Europe inclus</b></div><div class="mq-item">⌚ Option <b>Montre +2€</b></div>
-    <div class="mq-item">🔒 Zéro <b>frais caché</b></div><div class="mq-item">🚀 Activation <b>instantanée</b></div>
+<div class="marquee-outer">
+  <div class="marquee-track">
+    <div class="mq-item"><b>Réseau Satellitaire</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>100% Europe couverte</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>eSIM Gratuite</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>Sans Engagement</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>Appels &amp; SMS Illimités</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>5G Incluse</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>Option Montre +2 €</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>Zéro Frais Caché</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>Réseau Satellitaire</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>100% Europe couverte</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>eSIM Gratuite</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>Sans Engagement</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>Appels &amp; SMS Illimités</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>5G Incluse</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>Option Montre +2 €</b><span class="mq-dot">●</span></div>
+    <div class="mq-item"><b>Zéro Frais Caché</b><span class="mq-dot">●</span></div>
   </div>
 </div>
 
 <!-- WHY -->
 
-<section class="why-sect spad" id="why">
-  <div class="mxw">
-    <div style="margin-bottom:72px" class="rv">
-      <p class="slabel">Pourquoi nous choisir</p>
-      <h2 class="stitle">Un opérateur taillé<br>pour votre liberté.</h2>
-      <p class="ssub">Fini les contrats piégeux, les frais cachés et les délais interminables. NexaMobile, c'est simple par conception.</p>
+<section id="why" class="section">
+  <div class="container">
+    <div class="text-center reveal">
+      <p class="section-label">Pourquoi NexaMobile</p>
+      <h2 class="section-title">Conçu pour votre liberté.</h2>
+      <p class="section-sub centered">Fini les zones blanches, les contrats piégeux et les frais incompréhensibles. NexaMobile, c'est la connectivité réinventée.</p>
     </div>
-    <div class="why-grid rv">
-      <div class="why-item">
-        <div class="wnum">01</div><div class="wicon ib">⚡</div>
-        <div class="wtitle">5G premium à petit prix</div>
-        <p class="wdesc">Accédez aux fréquences 5G les plus rapides disponibles en France dès 6,99 €/mois. Streaming 4K, jeu en ligne, téléchargements instantanés — sans concession.</p>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-card-icon ic-b">🛰️</div>
+        <h3>Réseau satellitaire exclusif</h3>
+        <p>Notre constellation de satellites en orbite basse couvre l'intégralité du territoire européen. Finis les angles morts — vous captez en montagne, en mer, en campagne.</p>
       </div>
-      <div class="why-item">
-        <div class="wnum">02</div><div class="wicon ig">🔓</div>
-        <div class="wtitle">Zéro engagement, zéro piège</div>
-        <p class="wdesc">Résiliez à tout moment depuis votre espace client. Aucun frais, aucun préavis, aucune pénalité. Votre forfait fonctionne sur votre tempo, pas le nôtre.</p>
+      <div class="why-card reveal d1">
+        <div class="why-card-icon ic-g">🔓</div>
+        <h3>Zéro engagement, zéro piège</h3>
+        <p>Résiliez à tout moment depuis votre espace client. Aucun préavis, aucune pénalité, aucun frais. Votre forfait, sur votre tempo.</p>
       </div>
-      <div class="why-item">
-        <div class="wnum">03</div><div class="wicon ip">📱</div>
-        <div class="wtitle">100% eSIM, activation 2 min</div>
-        <p class="wdesc">Pas de carte physique à attendre. Souscrivez en ligne, scannez le QR code et votre ligne est active instantanément. La SIM du futur, disponible aujourd'hui, gratuitement.</p>
+      <div class="why-card reveal d2">
+        <div class="why-card-icon ic-p">📱</div>
+        <h3>eSIM instantanée &amp; gratuite</h3>
+        <p>Souscrivez en ligne, scannez le QR code reçu par email, et votre ligne est active en 2 minutes. Aucune boutique, aucune attente.</p>
       </div>
-      <div class="why-item">
-        <div class="wnum">04</div><div class="wicon io">💶</div>
-        <div class="wtitle">Les vrais prix du marché</div>
-        <p class="wdesc">200 Go 5G à 9,99 €/mois avec appels et SMS illimités. Nos tarifs défient toute concurrence sans jamais sacrifier la qualité réseau, le service client ou la transparence.</p>
+      <div class="why-card reveal d3">
+        <div class="why-card-icon ic-o">💶</div>
+        <h3>Tarifs vraiment compétitifs</h3>
+        <p>200 Go 5G avec appels et SMS illimités pour seulement 9,99 €/mois. Un prix qui défit toute la concurrence, sans compromis sur la qualité.</p>
       </div>
-      <div class="why-big rv">
-        <div class="wbstat"><div class="wbnum" data-count="99">0</div><div class="wblabel">% population couverte</div></div>
-        <div class="wbdiv"></div>
-        <div class="wbstat"><div class="wbnum">2s</div><div class="wblabel">Activation eSIM</div></div>
-        <div class="wbdiv"></div>
-        <div class="wbstat"><div class="wbnum">0€</div><div class="wblabel">Frais d'activation</div></div>
-        <div class="wbdiv"></div>
-        <div class="wbstat"><div class="wbnum">24/7</div><div class="wblabel">Support client</div></div>
+      <div class="why-card-wide reveal">
+        <div class="why-stat">
+          <div class="why-stat-n" data-count="47">0</div>
+          <div class="why-stat-l">pays couverts</div>
+        </div>
+        <div class="why-stat">
+          <div class="why-stat-n">2s</div>
+          <div class="why-stat-l">activation eSIM</div>
+        </div>
+        <div class="why-stat">
+          <div class="why-stat-n">0€</div>
+          <div class="why-stat-l">frais d'activation</div>
+        </div>
+        <div class="why-stat">
+          <div class="why-stat-n">24/7</div>
+          <div class="why-stat-l">support client</div>
+        </div>
       </div>
     </div>
   </div>
@@ -362,207 +899,429 @@ body{cursor:auto}.cur,.cur-ring{display:none}
 
 <!-- PLANS -->
 
-<section class="plans-sect spad" id="plans">
-  <div class="mxw">
-    <div style="text-align:center;margin-bottom:16px" class="rv">
-      <p class="slabel">Forfaits</p>
-      <h2 class="stitle">Choisissez votre forfait.</h2>
-      <p class="ssub" style="margin:16px auto 0;text-align:center">Appels &amp; SMS illimités, 5G et eSIM gratuite sur chaque forfait. Sans engagement.</p>
-    </div>
-    <div class="tog-wrap rv">
-      <div class="tog">
-        <button class="tog-btn act" onclick="swPlan('m',this)">Mensuel</button>
-        <button class="tog-btn" onclick="swPlan('y',this)">Annuel <span style="font-size:11px;color:var(--green);margin-left:4px">−15%</span></button>
-      </div>
-    </div>
-    <div class="plans-grid">
-      <!-- CLASSIQUE -->
-      <div class="pc rv">
-        <span class="pbadge bd">Classique</span>
-        <div class="pname">Classique</div><div class="ptag">L'essentiel, parfaitement maîtrisé</div>
-        <div class="pdata">100</div><div class="pdunit">Go de données</div><div class="p5g">⚡ 5G</div>
-        <div class="psep"></div>
-        <ul class="pfeats">
-          <li><span class="fchk">✓</span>Appels illimités</li>
-          <li><span class="fchk">✓</span>SMS / MMS illimités</li>
-          <li><span class="fchk">✓</span>eSIM gratuite</li>
-          <li><span class="fchk">✓</span>Roaming Europe</li>
-          <li><span class="fchk">✓</span>Sans engagement</li>
-        </ul>
-        <div class="psep"></div>
-        <div class="pprice" id="pc1"><sup>€</sup>6<sup>,99</sup></div>
-        <div class="pper">/mois · sans engagement</div>
-        <a href="#" class="pcta cout">Choisir Classique →</a>
-      </div>
-      <!-- PLUS -->
-      <div class="pc feat rv d1">
-        <span class="pbadge bp">⭐ Le plus populaire</span>
-        <div class="pname">Plus</div><div class="ptag">Le rapport qualité-prix ultime</div>
-        <div class="pdata">200</div><div class="pdunit">Go de données</div><div class="p5g">⚡ 5G</div>
-        <div class="psep"></div>
-        <ul class="pfeats">
-          <li><span class="fchk">✓</span>Appels illimités</li>
-          <li><span class="fchk">✓</span>SMS / MMS illimités</li>
-          <li><span class="fchk">✓</span>eSIM gratuite</li>
-          <li><span class="fchk">✓</span>Roaming Europe étendu</li>
-          <li><span class="fchk">✓</span>Sans engagement</li>
-          <li><span class="fchk">✓</span>Débit prioritaire</li>
-        </ul>
-        <div class="psep"></div>
-        <div class="pprice" id="pc2"><sup>€</sup>9<sup>,99</sup></div>
-        <div class="pper">/mois · sans engagement</div>
-        <a href="#" class="pcta cblue">Choisir Plus →</a>
-      </div>
-      <!-- MAX -->
-      <div class="pc rv d2">
-        <span class="pbadge bx">✦ Premium</span>
-        <div class="pname">Max</div><div class="ptag">Zéro restriction, performance absolue</div>
-        <div class="pdata">350</div><div class="pdunit">Go de données</div><div class="p5g">⚡ 5G</div>
-        <div class="psep"></div>
-        <ul class="pfeats">
-          <li><span class="fchk">✓</span>Appels illimités</li>
-          <li><span class="fchk">✓</span>SMS / MMS illimités</li>
-          <li><span class="fchk">✓</span>eSIM gratuite</li>
-          <li><span class="fchk">✓</span>Roaming Europe &amp; DOM</li>
-          <li><span class="fchk">✓</span>Sans engagement</li>
-          <li><span class="fchk">✓</span>Débit prioritaire max</li>
-          <li><span class="fchk">✓</span>Hotspot HD illimité</li>
-        </ul>
-        <div class="psep"></div>
-        <div class="pprice" id="pc3"><sup>€</sup>19<sup>,99</sup></div>
-        <div class="pper">/mois · sans engagement</div>
-        <a href="#" class="pcta cout">Choisir Max →</a>
-      </div>
+<section id="plans" class="section">
+  <div class="container">
+    <div class="text-center reveal">
+      <p class="section-label">Forfaits</p>
+      <h2 class="section-title">Choisissez votre forfait.</h2>
+      <p class="section-sub centered">Appels &amp; SMS illimités, 5G et eSIM gratuite sur chaque forfait. Sans engagement.</p>
     </div>
 
 ```
-<!-- WATCH CARD -->
-<div class="watch-card rv">
-  <div class="wico">⌚</div>
-  <div class="winfo">
-    <div class="wtit">Option Montre Connectée</div>
-    <div class="wsub">Connectez votre Apple Watch ou montre LTE indépendamment de votre iPhone. Appelez, recevez des messages et utilisez vos données depuis votre poignet, même sans iPhone à proximité. Nécessite un forfait NexaMobile actif.</div>
+<div class="text-center">
+  <div class="billing-toggle" style="display:inline-flex;">
+    <button class="active" id="btn-monthly" onclick="setBilling('monthly')">Mensuel</button>
+    <button id="btn-yearly" onclick="setBilling('yearly')">Annuel <span class="save-tag">−15%</span></button>
   </div>
-  <div class="wprice">+2 €<span>/mois</span></div>
 </div>
-<p class="rv" style="text-align:center;font-size:12px;color:var(--text3);margin-top:14px">L'option montre nécessite obligatoirement un forfait actif (Classique, Plus ou Max).</p>
+
+<div class="plans-grid">
+  <!-- CLASSIQUE -->
+  <div class="plan-card reveal">
+    <span class="plan-pill pp-gray">Classique</span>
+    <div class="plan-name">Classique</div>
+    <div class="plan-subtitle">L'essentiel parfaitement maîtrisé</div>
+    <div class="plan-data">100</div>
+    <div class="plan-data-unit">Go de données</div>
+    <div class="plan-badge-5g">⚡ 5G SATELLITE</div>
+    <div class="plan-sep"></div>
+    <ul class="plan-features">
+      <li><span class="feat-tick">✓</span>Appels illimités</li>
+      <li><span class="feat-tick">✓</span>SMS / MMS illimités</li>
+      <li><span class="feat-tick">✓</span>eSIM gratuite</li>
+      <li><span class="feat-tick">✓</span>Couverture Europe totale</li>
+      <li><span class="feat-tick">✓</span>Sans engagement</li>
+    </ul>
+    <div class="plan-sep"></div>
+    <div class="plan-price-row">
+      <div class="plan-price" id="price-c"><sup>€</sup>6<sup>,99</sup></div>
+    </div>
+    <div class="plan-per">/mois · sans engagement</div>
+    <button class="plan-cta cta-outline">Choisir Classique →</button>
+  </div>
+
+  <!-- PLUS -->
+  <div class="plan-card featured reveal d1">
+    <span class="plan-pill pp-blue">⭐ Plus populaire</span>
+    <div class="plan-name">Plus</div>
+    <div class="plan-subtitle">Le rapport qualité-prix ultime</div>
+    <div class="plan-data">200</div>
+    <div class="plan-data-unit">Go de données</div>
+    <div class="plan-badge-5g">⚡ 5G SATELLITE</div>
+    <div class="plan-sep"></div>
+    <ul class="plan-features">
+      <li><span class="feat-tick">✓</span>Appels illimités</li>
+      <li><span class="feat-tick">✓</span>SMS / MMS illimités</li>
+      <li><span class="feat-tick">✓</span>eSIM gratuite</li>
+      <li><span class="feat-tick">✓</span>Couverture Europe totale</li>
+      <li><span class="feat-tick">✓</span>Sans engagement</li>
+      <li><span class="feat-tick">✓</span>Débit prioritaire</li>
+    </ul>
+    <div class="plan-sep"></div>
+    <div class="plan-price-row">
+      <div class="plan-price" id="price-p"><sup>€</sup>9<sup>,99</sup></div>
+    </div>
+    <div class="plan-per">/mois · sans engagement</div>
+    <button class="plan-cta cta-solid">Choisir Plus →</button>
+  </div>
+
+  <!-- MAX -->
+  <div class="plan-card reveal d2">
+    <span class="plan-pill pp-purple">✦ Premium</span>
+    <div class="plan-name">Max</div>
+    <div class="plan-subtitle">Zéro limite, performance absolue</div>
+    <div class="plan-data">350</div>
+    <div class="plan-data-unit">Go de données</div>
+    <div class="plan-badge-5g">⚡ 5G SATELLITE</div>
+    <div class="plan-sep"></div>
+    <ul class="plan-features">
+      <li><span class="feat-tick">✓</span>Appels illimités</li>
+      <li><span class="feat-tick">✓</span>SMS / MMS illimités</li>
+      <li><span class="feat-tick">✓</span>eSIM gratuite</li>
+      <li><span class="feat-tick">✓</span>Couverture Europe totale</li>
+      <li><span class="feat-tick">✓</span>Sans engagement</li>
+      <li><span class="feat-tick">✓</span>Débit prioritaire max</li>
+      <li><span class="feat-tick">✓</span>Hotspot illimité HD</li>
+    </ul>
+    <div class="plan-sep"></div>
+    <div class="plan-price-row">
+      <div class="plan-price" id="price-m"><sup>€</sup>19<sup>,99</sup></div>
+    </div>
+    <div class="plan-per">/mois · sans engagement</div>
+    <button class="plan-cta cta-outline">Choisir Max →</button>
+  </div>
+</div>
+
+<!-- WATCH -->
+<div class="watch-addon reveal">
+  <div class="watch-emoji">⌚</div>
+  <div class="watch-text">
+    <h4>Option Montre Connectée — +2 €/mois</h4>
+    <p>Connectez votre Apple Watch LTE ou montre compatible indépendamment de votre iPhone. Appelez, recevez des messages depuis votre poignet, même sans iPhone à proximité. Nécessite un forfait NexaMobile actif.</p>
+  </div>
+  <div class="watch-price">+2 €<span>/mois</span></div>
+</div>
+<p style="text-align:center;font-size:12px;color:var(--t3);margin-top:12px">L'option montre nécessite un forfait NexaMobile actif (Classique, Plus ou Max).</p>
 ```
 
   </div>
 </section>
 
-<!-- ESIM -->
+<!-- SATELLITE SECTION -->
 
-<section class="esim-sect spad" id="esim">
-  <div class="mxw">
-    <div class="esim-inner">
-      <div>
-        <p class="slabel rv">eSIM</p>
-        <h2 class="stitle rv">La SIM du futur.<br>Disponible maintenant.</h2>
-        <p class="ssub rv">NexaMobile est 100% eSIM. Pas de carte à attendre, pas de boutique à visiter. Tout se fait en quelques secondes, depuis votre canapé.</p>
-        <div class="esteps" style="margin-top:48px">
-          <div class="estep rv"><div class="snum">01</div><div><div class="stit">Choisissez votre forfait</div><div class="sdesc">Sélectionnez Classique, Plus ou Max. Commande sécurisée en ligne en moins de 3 minutes.</div></div></div>
-          <div class="estep rv d1"><div class="snum">02</div><div><div class="stit">Recevez votre QR code par email</div><div class="sdesc">Un QR code unique arrive dans votre boîte mail sous 2 minutes. Aucune carte physique.</div></div></div>
-          <div class="estep rv d2"><div class="snum">03</div><div><div class="stit">Scannez et activez</div><div class="sdesc">Réglages → Données mobiles → Ajouter un forfait → Scannez. Votre ligne est active instantanément.</div></div></div>
-          <div class="estep rv d3"><div class="snum">04</div><div><div class="stit">Profitez de la 5G</div><div class="sdesc">Compatible iPhone XS+, Samsung Galaxy S20+, Google Pixel 3+ et la plupart des appareils récents.</div></div></div>
-        </div>
-      </div>
-      <div class="esim-vis rv">
-        <div class="esim-glow"></div>
-        <div class="ephone">
-          <div class="enotch"></div>
-          <div class="esc">
-            <div class="eqr" id="eqr"></div>
-            <div class="elabel">Scanner le QR code</div>
-            <div class="esublabel">Activation NexaMobile</div>
-          </div>
-          <div class="ehome"></div>
-        </div>
-      </div>
+<section id="satellite" class="section" style="background:var(--ink-1)">
+  <div class="container">
+    <div class="text-center reveal">
+      <p class="section-label">Technologie</p>
+      <h2 class="section-title">Un réseau<br>venu de l'espace.</h2>
+      <p class="section-sub centered">NexaMobile est le seul opérateur français dont l'infrastructure repose sur une constellation de satellites en orbite basse (LEO). Résultat : une couverture absolue, là où les antennes terrestres ne passent pas.</p>
     </div>
+
+```
+<!-- SVG Satellite visual -->
+<div class="sat-visual reveal">
+  <svg width="100%" height="360" viewBox="0 0 900 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:900px;position:absolute">
+    <!-- Orbits -->
+    <ellipse cx="450" cy="180" rx="200" ry="60" stroke="rgba(10,132,255,0.12)" stroke-width="1"/>
+    <ellipse cx="450" cy="180" rx="310" ry="100" stroke="rgba(10,132,255,0.08)" stroke-width="1"/>
+    <ellipse cx="450" cy="180" rx="400" ry="130" stroke="rgba(10,132,255,0.05)" stroke-width="1"/>
+    <!-- Coverage lines -->
+    <line x1="450" y1="180" x2="280" y2="140" stroke="rgba(10,132,255,0.15)" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="450" y1="180" x2="180" y2="170" stroke="rgba(10,132,255,0.15)" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="450" y1="180" x2="620" y2="130" stroke="rgba(10,132,255,0.15)" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="450" y1="180" x2="720" y2="165" stroke="rgba(10,132,255,0.15)" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <!-- Satellite icons -->
+    <!-- Sat A -->
+    <g id="sA"><rect x="-8" y="-4" width="16" height="8" rx="2" fill="rgba(10,132,255,0.7)"/>
+      <rect x="-18" y="-2" width="8" height="4" rx="1" fill="rgba(10,132,255,0.4)"/>
+      <rect x="10" y="-2" width="8" height="4" rx="1" fill="rgba(10,132,255,0.4)"/>
+      <circle cx="0" cy="0" r="2" fill="var(--blue)"/>
+    </g>
+    <g id="sB"><rect x="-8" y="-4" width="16" height="8" rx="2" fill="rgba(50,173,230,0.7)"/>
+      <rect x="-18" y="-2" width="8" height="4" rx="1" fill="rgba(50,173,230,0.4)"/>
+      <rect x="10" y="-2" width="8" height="4" rx="1" fill="rgba(50,173,230,0.4)"/>
+      <circle cx="0" cy="0" r="2" fill="var(--cyan)"/>
+    </g>
+    <g id="sC"><rect x="-8" y="-4" width="16" height="8" rx="2" fill="rgba(48,209,88,0.7)"/>
+      <rect x="-18" y="-2" width="8" height="4" rx="1" fill="rgba(48,209,88,0.4)"/>
+      <rect x="10" y="-2" width="8" height="4" rx="1" fill="rgba(48,209,88,0.4)"/>
+      <circle cx="0" cy="0" r="2" fill="var(--green)"/>
+    </g>
+    <!-- Coverage glow dots on Earth -->
+    <circle cx="380" cy="185" r="4" fill="var(--blue)" opacity="0.6"/>
+    <circle cx="420" cy="175" r="3" fill="var(--green)" opacity="0.6"/>
+    <circle cx="460" cy="190" r="4" fill="var(--blue)" opacity="0.5"/>
+    <circle cx="500" cy="178" r="3" fill="var(--cyan)" opacity="0.6"/>
+    <circle cx="530" cy="185" r="4" fill="var(--green)" opacity="0.4"/>
+  </svg>
+
+  <!-- Earth -->
+  <div class="sat-earth"></div>
+</div>
+
+<p class="sat-text reveal">
+  Notre constellation assure une latence inférieure à <strong style="color:var(--t1)">40 ms</strong> —
+  idéale pour le streaming, le jeu vidéo et la visioconférence.<br>
+  Couverture garantie dans <strong style="color:var(--t1)">47 pays européens</strong>, des Canaries à la Laponie.
+</p>
+```
+
   </div>
 </section>
 
 <!-- COVERAGE -->
 
-<section class="cov-sect spad" id="reseau">
-  <div class="mxw">
-    <div style="text-align:center" class="rv">
-      <p class="slabel">Réseau</p>
-      <h2 class="stitle">Une couverture<br>nationale 5G.</h2>
-      <p class="ssub" style="margin:16px auto 0;text-align:center">NexaMobile s'appuie sur l'infrastructure 5G la plus étendue et la plus fiable de France.</p>
+<section id="coverage" class="section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Couverture</p>
+      <h2 class="section-title">Partout en Europe.<br>Littéralement.</h2>
+      <p class="section-sub">Grâce au réseau satellitaire, il n'existe plus de zone blanche. Ni en haute montagne, ni en pleine mer, ni dans les campagnes les plus reculées.</p>
     </div>
-    <div class="cov-grid rv">
-      <div class="cov-item"><div class="cov-num" data-count="99">0</div><div class="cov-lbl">% de la population couverte</div></div>
-      <div class="cov-item"><div class="cov-num">5G</div><div class="cov-lbl">Technologie réseau</div></div>
-      <div class="cov-item"><div class="cov-num" data-count="32">0</div><div class="cov-lbl">Pays en roaming inclus</div></div>
-    </div>
-    <div class="nbadges rv">
-      <div class="nbadge"><div class="nd ndb"></div>5G Sub-6 GHz</div>
-      <div class="nbadge"><div class="nd ndg"></div>4G LTE de secours</div>
-      <div class="nbadge"><div class="nd ndb"></div>VoLTE HD</div>
-      <div class="nbadge"><div class="nd ndg"></div>Wi-Fi Calling</div>
-      <div class="nbadge"><div class="nd ndb"></div>IPv6 natif</div>
+    <div class="cov-inner">
+      <!-- Europe SVG map -->
+      <div class="cov-map reveal">
+        <svg class="europe-svg" viewBox="0 0 400 380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="mapGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#0a84ff" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#0a84ff" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="400" height="380" fill="url(#mapGlow)"/>
+          <!-- Simplified Europe landmass -->
+          <!-- Iberian Peninsula -->
+          <path d="M 100 220 L 80 200 L 70 185 L 75 165 L 95 155 L 120 155 L 140 160 L 150 175 L 145 195 L 130 215 Z" fill="rgba(10,132,255,0.35)" stroke="rgba(10,132,255,0.5)" stroke-width="0.8"/>
+          <!-- France -->
+          <path d="M 150 175 L 165 155 L 185 145 L 210 148 L 220 165 L 215 185 L 195 195 L 170 195 Z" fill="rgba(10,132,255,0.35)" stroke="rgba(10,132,255,0.5)" stroke-width="0.8"/>
+          <!-- UK & Ireland -->
+          <path d="M 150 130 L 145 115 L 155 105 L 172 108 L 180 125 L 168 138 Z" fill="rgba(10,132,255,0.3)" stroke="rgba(10,132,255,0.5)" stroke-width="0.8"/>
+          <path d="M 130 122 L 124 112 L 132 105 L 140 112 L 136 122 Z" fill="rgba(10,132,255,0.3)" stroke="rgba(10,132,255,0.5)" stroke-width="0.8"/>
+          <!-- BeNeLux -->
+          <path d="M 185 145 L 200 135 L 210 140 L 210 148 L 195 148 Z" fill="rgba(10,132,255,0.4)" stroke="rgba(10,132,255,0.5)" stroke-width="0.8"/>
+          <!-- Germany -->
+          <path d="M 210 148 L 225 138 L 245 140 L 248 155 L 240 168 L 220 165 Z" fill="rgba(10,132,255,0.4)" stroke="rgba(10,132,255,0.5)" stroke-width="0.8"/>
+          <!-- Italy -->
+          <path d="M 220 165 L 240 168 L 248 185 L 255 205 L 248 225 L 238 235 L 232 225 L 228 205 L 218 188 Z" fill="rgba(10,132,255,0.35)" stroke="rgba(10,132,255,0.5)" stroke-width="0.8"/>
+          <!-- Scandinavia -->
+          <path d="M 205 100 L 210 80 L 225 68 L 240 70 L 250 85 L 248 100 L 235 108 L 218 112 Z" fill="rgba(10,132,255,0.3)" stroke="rgba(10,132,255,0.5)" stroke-width="0.8"/>
+          <path d="M 250 85 L 262 72 L 275 78 L 278 95 L 265 105 L 250 100 Z" fill="rgba(10,132,255,0.25)" stroke="rgba(10,132,255,0.5)" stroke-width="0.8"/>
+          <!-- Poland / East -->
+          <path d="M 248 140 L 275 132 L 295 140 L 290 160 L 268 168 L 248 155 Z" fill="rgba(10,132,255,0.35)" stroke="rgba(10,132,255,0.5)" stroke-width="0.8"/>
+          <!-- Balkans -->
+          <path d="M 248 168 L 272 168 L 285 180 L 278 198 L 260 205 L 248 195 Z" fill="rgba(10,132,255,0.3)" stroke="rgba(10,132,255,0.5)" stroke-width="0.8"/>
+          <!-- Greece -->
+          <path d="M 268 200 L 280 198 L 285 215 L 275 225 L 265 218 Z" fill="rgba(10,132,255,0.3)" stroke="rgba(10,132,255,0.5)" stroke-width="0.8"/>
+          <!-- Coverage dots -->
+          <circle cx="115" cy="188" r="3" fill="var(--green)" opacity="0.8"><animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite"/></circle>
+          <circle cx="185" cy="170" r="3" fill="var(--blue)" opacity="0.9"><animate attributeName="r" values="3;5;3" dur="2.5s" repeatCount="indefinite"/></circle>
+          <circle cx="230" cy="155" r="3" fill="var(--cyan)" opacity="0.8"><animate attributeName="r" values="3;5;3" dur="1.8s" repeatCount="indefinite"/></circle>
+          <circle cx="265" cy="175" r="3" fill="var(--green)" opacity="0.7"><animate attributeName="r" values="3;5;3" dur="2.2s" repeatCount="indefinite"/></circle>
+          <circle cx="225" cy="80" r="3" fill="var(--blue)" opacity="0.6"><animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/></circle>
+          <circle cx="160" cy="120" r="3" fill="var(--cyan)" opacity="0.7"><animate attributeName="r" values="3;5;3" dur="2.8s" repeatCount="indefinite"/></circle>
+          <!-- Label -->
+          <text x="200" y="320" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="11" font-family="Figtree,sans-serif">Couverture satellitaire NexaMobile</text>
+        </svg>
+      </div>
+      <div class="cov-list reveal d1">
+        <div class="cov-item">
+          <div class="cov-icon ic-b">🛰️</div>
+          <div>
+            <h4>Satellites LEO en orbite basse</h4>
+            <p>Constellation à 550 km d'altitude pour une couverture dense et une faible latence.</p>
+          </div>
+        </div>
+        <div class="cov-item">
+          <div class="cov-icon ic-g">🏔️</div>
+          <div>
+            <h4>Zones blanches éliminées</h4>
+            <p>Montagne, campagne, offshore — vous captez partout où personne d'autre ne capte.</p>
+          </div>
+        </div>
+        <div class="cov-item">
+          <div class="cov-icon ic-c">🌊</div>
+          <div>
+            <h4>Couverture maritime</h4>
+            <p>Restez connecté en navigation côtière ou hauturière jusqu'à 200 milles nautiques.</p>
+          </div>
+        </div>
+        <div class="cov-item">
+          <div class="cov-icon ic-p">🇪🇺</div>
+          <div>
+            <h4>47 pays inclus</h4>
+            <p>UE + Norvège, Islande, Suisse, Liechtenstein, Royaume-Uni et plus — sans surcoût.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- COMPARISON -->
 
-<section class="cmp-sect spad" id="comparaison">
-  <div class="mxw">
-    <div style="text-align:center;margin-bottom:56px" class="rv">
-      <p class="slabel">Comparaison</p>
-      <h2 class="stitle">NexaMobile vs la concurrence.</h2>
+<section id="compare" class="section">
+  <div class="container">
+    <div class="text-center reveal">
+      <p class="section-label">Comparaison</p>
+      <h2 class="section-title">NexaMobile<br>vs la concurrence.</h2>
     </div>
-    <div class="rv" style="overflow-x:auto;border-radius:20px;border:1px solid var(--border)">
-      <table class="cmp-tbl">
+    <div class="compare-wrap reveal">
+      <table class="compare-table">
         <thead>
           <tr>
-            <th style="text-align:left;width:30%">Critère</th>
-            <th class="chl">NexaMobile Plus</th><th>Opérateur A</th><th>Opérateur B</th>
+            <th>Critère</th>
+            <th class="col-highlight">NexaMobile Plus</th>
+            <th>Opérateur A</th>
+            <th>Opérateur B</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Prix mensuel</td><td class="cnx chl">9,99 €</td><td class="cot">15,99 €</td><td class="cot">12,99 €</td></tr>
-          <tr><td>Volume data</td><td class="cnx chl">200 Go</td><td class="cot">150 Go</td><td class="cot">100 Go</td></tr>
-          <tr><td>5G incluse</td><td class="chl"><span class="cy">✓</span></td><td><span class="cy">✓</span></td><td><span class="cn">✗</span></td></tr>
-          <tr><td>eSIM gratuite</td><td class="chl"><span class="cy">✓</span></td><td><span class="cn">✗</span></td><td><span class="cn">✗</span></td></tr>
-          <tr><td>Sans engagement</td><td class="chl"><span class="cy">✓</span></td><td><span class="cn">✗</span></td><td><span class="cy">✓</span></td></tr>
-          <tr><td>Roaming Europe</td><td class="chl"><span class="cy">✓</span></td><td><span class="cy">✓</span></td><td><span class="cn">✗</span></td></tr>
-          <tr><td>Option montre connectée</td><td class="chl"><span class="cy">✓</span></td><td><span class="cn">✗</span></td><td><span class="cn">✗</span></td></tr>
-          <tr><td>Activation instantanée</td><td class="chl"><span class="cy">✓</span></td><td><span class="cn">✗</span></td><td><span class="cn">✗</span></td></tr>
-          <tr><td>Frais d'activation</td><td class="chl"><span class="cy">0 €</span></td><td class="cot">10 €</td><td class="cot">5 €</td></tr>
+          <tr>
+            <td>Prix mensuel</td>
+            <td class="col-nexa col-highlight">9,99 €</td>
+            <td class="col-gray">15,99 €</td>
+            <td class="col-gray">12,99 €</td>
+          </tr>
+          <tr>
+            <td>Volume data</td>
+            <td class="col-nexa col-highlight">200 Go</td>
+            <td class="col-gray">150 Go</td>
+            <td class="col-gray">100 Go</td>
+          </tr>
+          <tr>
+            <td>5G incluse</td>
+            <td class="col-highlight"><span class="icon-yes">✓</span></td>
+            <td><span class="icon-yes">✓</span></td>
+            <td><span class="icon-no">✗</span></td>
+          </tr>
+          <tr>
+            <td>eSIM gratuite</td>
+            <td class="col-highlight"><span class="icon-yes">✓</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-no">✗</span></td>
+          </tr>
+          <tr>
+            <td>Sans engagement</td>
+            <td class="col-highlight"><span class="icon-yes">✓</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>Couverture zones blanches</td>
+            <td class="col-highlight"><span class="icon-yes">✓</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-no">✗</span></td>
+          </tr>
+          <tr>
+            <td>Couverture maritime</td>
+            <td class="col-highlight"><span class="icon-yes">✓</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-no">✗</span></td>
+          </tr>
+          <tr>
+            <td>Option montre connectée</td>
+            <td class="col-highlight"><span class="icon-yes">✓</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-no">✗</span></td>
+          </tr>
+          <tr>
+            <td>Frais d'activation</td>
+            <td class="col-highlight col-nexa">0 €</td>
+            <td class="col-gray">10 €</td>
+            <td class="col-gray">5 €</td>
+          </tr>
         </tbody>
       </table>
     </div>
-    <p style="font-size:12px;color:var(--text3);margin-top:14px;text-align:center" class="rv">Comparaison indicative basée sur les offres publiques du marché. Données susceptibles de varier.</p>
+    <p style="font-size:12px;color:var(--t3);margin-top:12px;text-align:center" class="reveal">Comparaison indicative basée sur les offres publiques. Données susceptibles de varier.</p>
+  </div>
+</section>
+
+<!-- ESIM -->
+
+<section id="esim" class="section" style="background:var(--ink-1)">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">eSIM</p>
+      <h2 class="section-title">Activé en<br>2 minutes.</h2>
+      <p class="section-sub">NexaMobile est 100% eSIM. Pas de carte physique, pas d'attente. Scannez, et vous êtes connecté.</p>
+    </div>
+    <div class="esim-inner">
+      <div class="esim-steps">
+        <div class="esim-step reveal">
+          <div class="step-num">01</div>
+          <div>
+            <h4>Choisissez votre forfait</h4>
+            <p>Classique, Plus ou Max — commande sécurisée en ligne, en moins de 3 minutes.</p>
+          </div>
+        </div>
+        <div class="esim-step reveal d1">
+          <div class="step-num">02</div>
+          <div>
+            <h4>Recevez votre QR code par email</h4>
+            <p>Un QR code unique arrive en moins de 2 minutes. Aucune carte SIM physique à attendre.</p>
+          </div>
+        </div>
+        <div class="esim-step reveal d2">
+          <div class="step-num">03</div>
+          <div>
+            <h4>Scannez depuis vos Réglages</h4>
+            <p>Sur iPhone : Réglages → Données mobiles → Ajouter un forfait. Scannez. C'est actif.</p>
+          </div>
+        </div>
+        <div class="esim-step reveal d3">
+          <div class="step-num">04</div>
+          <div>
+            <h4>Profitez de la 5G satellite</h4>
+            <p>Compatible iPhone XS+, Samsung Galaxy S20+, Google Pixel 3+ et la plupart des appareils depuis 2020.</p>
+          </div>
+        </div>
+      </div>
+      <div class="reveal d2" style="display:flex;justify-content:center;">
+        <div class="phone-mock">
+          <div class="phone-notch"></div>
+          <div class="phone-qr" id="qr-grid"></div>
+          <div class="phone-label">Scanner le QR code</div>
+          <div class="phone-sub">Activation NexaMobile</div>
+          <div class="phone-bar"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- TESTIMONIALS -->
 
-<section class="tst-sect spad">
-  <div class="mxw">
-    <div style="text-align:center;margin-bottom:56px" class="rv">
-      <p class="slabel">Ils nous font confiance</p>
-      <h2 class="stitle">Ce que disent<br>nos clients.</h2>
+<section id="testimonials" class="section">
+  <div class="container">
+    <div class="text-center reveal">
+      <p class="section-label">Témoignages</p>
+      <h2 class="section-title">Ils nous font confiance.</h2>
     </div>
-    <div class="tst-grid">
-      <div class="tcard rv">
-        <div class="stars">★★★★★</div>
-        <p class="ttext">"Activé mon eSIM en moins de 3 minutes depuis mon iPhone. Le débit 5G est excellent et le prix défie toute concurrence. Je ne reviendrai jamais à une SIM physique."</p>
-        <div class="tauthor"><div class="tav avb">L</div><div><div class="tname">Lucas M.</div><div class="trole">Développeur, Paris</div></div></div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Activé en 3 minutes depuis mon iPhone. Je pars souvent en randonnée et c'est la première fois que je capte vraiment partout dans les Alpes. Bluffant."</p>
+        <div class="testi-author">
+          <div class="testi-avatar av1">L</div>
+          <div><div class="testi-name">Lucas M.</div><div class="testi-role">Guide de montagne, Chamonix</div></div>
+        </div>
       </div>
-      <div class="tcard rv d1">
-        <div class="stars">★★★★★</div>
-        <p class="ttext">"L'option montre avec mon forfait Plus est parfaite. Répondre aux appels depuis mon Apple Watch sans sortir le téléphone, c'est un vrai confort au quotidien."</p>
-        <div class="tauthor"><div class="tav avg">S</div><div><div class="tname">Sarah K.</div><div class="trole">Coach sportif, Lyon</div></div></div>
+      <div class="testi-card reveal d1">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"L'option montre avec mon forfait Plus est parfaite. Et la couverture en mer est incroyable — je navigue régulièrement et j'ai toujours du réseau maintenant."</p>
+        <div class="testi-author">
+          <div class="testi-avatar av2">S</div>
+          <div><div class="testi-name">Sarah K.</div><div class="testi-role">Navigatrice, Brest</div></div>
+        </div>
       </div>
-      <div class="tcard rv d2">
-        <div class="stars">★★★★★</div>
-        <p class="ttext">"350 Go 5G à 19,99 € avec roaming Europe, ça n'existe nulle part ailleurs. Et le support client répond vraiment en moins de 2h. Parfait pour mes déplacements pro."</p>
-        <div class="tauthor"><div class="tav avp">M</div><div><div class="tname">Marie-Claire D.</div><div class="trole">Consultante, Bordeaux</div></div></div>
+      <div class="testi-card reveal d2">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"350 Go 5G à 19,99 € et surtout une couverture dans toute l'Europe pour mes déplacements pro. Aucun opérateur classique n'offre ça à ce prix."</p>
+        <div class="testi-author">
+          <div class="testi-avatar av3">M</div>
+          <div><div class="testi-name">Marie-Claire D.</div><div class="testi-role">Consultante, Paris</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -570,120 +1329,310 @@ body{cursor:auto}.cur,.cur-ring{display:none}
 
 <!-- FAQ -->
 
-<section class="faq-sect spad" id="faq">
-  <div class="mxw760">
-    <div style="text-align:center;margin-bottom:64px" class="rv">
-      <p class="slabel">FAQ</p><h2 class="stitle">Questions fréquentes.</h2>
+<section id="faq" class="section" style="background:var(--ink-1)">
+  <div class="container-narrow">
+    <div class="text-center reveal">
+      <p class="section-label">FAQ</p>
+      <h2 class="section-title">Questions fréquentes.</h2>
     </div>
-    <div class="rv">
-      <div class="fitem"><div class="fq">Mon téléphone est-il compatible eSIM ?<span class="fic">+</span></div><div class="fa">La majorité des smartphones récents supportent l'eSIM : iPhone XS et ultérieur, Samsung Galaxy S20+, Google Pixel 3+, et la plupart des appareils sortis après 2020. Vérifiez dans Réglages → Données mobiles → Ajouter un forfait.</div></div>
-      <div class="fitem"><div class="fq">Comment activer mon eSIM NexaMobile ?<span class="fic">+</span></div><div class="fa">Après souscription, un QR code vous est envoyé par email sous 2 minutes. Sur iPhone : Réglages → Données mobiles → Ajouter un forfait → Scanner le QR. Votre ligne est active immédiatement après le scan.</div></div>
-      <div class="fitem"><div class="fq">Puis-je garder mon numéro actuel ?<span class="fic">+</span></div><div class="fa">Oui, la portabilité est entièrement gratuite. Lors de la souscription, renseignez votre numéro RIO (disponible en appelant le 3179). Le transfert s'effectue en 24 à 48h ouvrées sans interruption de service.</div></div>
-      <div class="fitem"><div class="fq">Y a-t-il des frais de résiliation ou d'activation ?<span class="fic">+</span></div><div class="fa">Aucun. L'activation est gratuite, l'eSIM est gratuite, et la résiliation est gratuite, sans délai et sans pénalité. Vous résiliez en un clic depuis votre espace client.</div></div>
-      <div class="fitem"><div class="fq">Que se passe-t-il quand j'atteins ma limite data ?<span class="fic">+</span></div><div class="fa">Votre connexion data est bridée à 512 kbps jusqu'au renouvellement mensuel. Vous êtes notifié à 80%, 95% et 100% de consommation. Les appels et SMS restent illimités sans exception.</div></div>
-      <div class="fitem"><div class="fq">Comment fonctionne l'option montre connectée ?<span class="fic">+</span></div><div class="fa">L'option à +2 €/mois connecte votre Apple Watch Cellular (Series 3+) ou montre LTE compatible à votre forfait NexaMobile. Elle partage votre numéro : vous appelez et recevez des appels depuis votre poignet, même sans iPhone. Nécessite un forfait actif.</div></div>
-      <div class="fitem"><div class="fq">Le roaming Europe est-il vraiment inclus ?<span class="fic">+</span></div><div class="fa">Oui, dans les 27 pays de l'UE ainsi que la Norvège, l'Islande et le Liechtenstein, sans surcoût. Le volume data utilisé en roaming est déduit de votre enveloppe mensuelle habituelle.</div></div>
-      <div class="fitem"><div class="fq">Puis-je avoir plusieurs lignes NexaMobile ?<span class="fic">+</span></div><div class="fa">Oui. Chaque ligne est indépendante et gérée depuis un espace client dédié. Vous pouvez souscrire autant de forfaits que nécessaire, avec des combinaisons de plans différentes. Des offres famille sont à venir.</div></div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">Comment fonctionne le réseau satellitaire ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">NexaMobile s'appuie sur une constellation de satellites en orbite basse (LEO) à environ 550 km d'altitude. Ces satellites relaient votre signal mobile partout en Europe, y compris en zones blanches, en montagne, en mer ou dans les campagnes reculées où les antennes terrestres n'arrivent pas.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">Mon téléphone est-il compatible eSIM ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">La majorité des smartphones récents supportent l'eSIM : iPhone XS et ultérieur, Samsung Galaxy S20+, Google Pixel 3+, et la plupart des appareils sortis après 2020. Vérifiez dans Réglages → Données mobiles → Ajouter un forfait. Si l'option apparaît, votre appareil est compatible.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">Comment activer mon eSIM NexaMobile ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Après souscription, un QR code vous est envoyé par email sous 2 minutes. Sur iPhone : Réglages → Données mobiles → Ajouter un forfait → Scanner le code QR. Votre ligne NexaMobile est active immédiatement après le scan.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">Puis-je garder mon numéro actuel ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Oui, la portabilité est entièrement gratuite. Lors de la souscription, indiquez votre RIO (disponible en appelant le 3179 depuis votre ligne actuelle). Le transfert s'effectue en 24 à 48 heures ouvrées sans interruption de service.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">Y a-t-il des frais de résiliation ou d'activation ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Absolument aucun. L'activation est gratuite, l'eSIM est gratuite, et la résiliation est gratuite, sans délai et sans pénalité. Vous résiliez en un clic depuis votre espace client, à n'importe quel moment.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">Que se passe-t-il quand j'atteins ma limite data ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Votre connexion data est bridée à 512 kbps jusqu'au prochain renouvellement mensuel. Vous êtes notifié à 80 %, 95 % et 100 % de consommation. Les appels et SMS restent illimités sans exception, même après dépassement.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">Comment fonctionne l'option montre connectée ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">À +2 €/mois, connectez votre Apple Watch Cellular (Series 3 et ultérieure) ou toute montre LTE compatible. Elle partage votre numéro NexaMobile : vous appelez et recevez des appels depuis votre poignet, même sans iPhone à portée. Un forfait actif est obligatoire.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">Est-ce que ça fonctionne vraiment en zone blanche ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Oui. C'est précisément l'avantage du réseau satellitaire : il ne dépend pas d'antennes au sol. Nos satellites couvrent l'intégralité du territoire européen, y compris les sommets alpins, les zones rurales profondes et les eaux territoriales.</div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- CGV -->
 
-<section class="cgv-sect spad" id="cgv">
-  <div class="mxw">
-    <div style="text-align:center;margin-bottom:64px" class="rv">
-      <p class="slabel">Conditions générales</p>
-      <h2 class="stitle">Transparence totale.</h2>
-      <p class="ssub" style="margin:16px auto 0;text-align:center">Chez NexaMobile, pas de petites lignes incompréhensibles.</p>
+<section id="cgv" class="section">
+  <div class="container">
+    <div class="text-center reveal">
+      <p class="section-label">Conditions Générales</p>
+      <h2 class="section-title">Transparence totale.</h2>
+      <p class="section-sub centered">Chez NexaMobile, pas de petites lignes incompréhensibles. Voici ce que vous devez savoir.</p>
     </div>
-    <div class="cgv-grid rv">
-      <div class="cgv-item"><div class="cgtit">📋 Abonnement et facturation</div><p class="cgtext">Les forfaits NexaMobile sont proposés <strong>sans engagement</strong> et facturés mensuellement à la date de souscription. Le paiement est prélevé automatiquement par carte bancaire ou SEPA. <strong>Aucuns frais d'activation</strong> ne sont appliqués. La première mensualité est due à la souscription. Les forfaits sont renouvelables tacitement chaque mois.</p></div>
-      <div class="cgv-item"><div class="cgtit">🔓 Résiliation</div><p class="cgtext">La résiliation est <strong>gratuite, sans frais et sans délai de préavis</strong>. Elle peut être effectuée à tout moment depuis l'espace client, par email ou par courrier. La ligne reste active jusqu'à la fin de la période mensuelle en cours. Aucun remboursement au prorata pour la période entamée.</p></div>
-      <div class="cgv-item"><div class="cgtit">📱 eSIM et compatibilité</div><p class="cgtext">NexaMobile est un opérateur <strong>exclusivement eSIM</strong>. Aucune carte SIM physique n'est fournie. Le client est responsable de la compatibilité de son terminal. L'eSIM est délivrée gratuitement sous forme de QR code à usage unique. En cas de changement de terminal, une nouvelle eSIM sera émise <strong>gratuitement</strong>.</p></div>
-      <div class="cgv-item"><div class="cgtit">📡 Données et usage loyal</div><p class="cgtext">L'utilisation des données doit rester dans un cadre personnel et non commercial. En cas de <strong>dépassement du volume data</strong>, le débit est limité à 512 kbps jusqu'au renouvellement. L'usage intensif du tethering comme relais internet fixe permanent peut entraîner la suspension du service.</p></div>
-      <div class="cgv-item"><div class="cgtit">🇪🇺 Roaming Europe</div><p class="cgtext">Conformément à la réglementation européenne, l'itinérance dans l'UE est incluse. Le volume data utilisé à l'étranger est <strong>déduit de l'enveloppe mensuelle</strong>. En cas d'usage itinérant disproportionné (règle d'usage raisonnable), NexaMobile se réserve le droit d'appliquer des suppléments.</p></div>
-      <div class="cgv-item"><div class="cgtit">⌚ Option montre connectée</div><p class="cgtext">L'option montre est facturée <strong>+2 €/mois</strong> et nécessite impérativement un forfait NexaMobile actif. Elle ne peut pas être souscrite seule. La résiliation de l'abonnement principal entraîne automatiquement la résiliation de l'option. Compatible Apple Watch Cellular Series 3+ et terminaux LTE similaires.</p></div>
-      <div class="cgv-item"><div class="cgtit">🔒 Données personnelles (RGPD)</div><p class="cgtext">NexaMobile traite vos données conformément au <strong>RGPD</strong>. Vos données sont utilisées exclusivement pour la gestion de votre abonnement et ne sont jamais revendues. Vous disposez d'un droit d'accès, de rectification et de suppression en contactant notre DPO : privacy@nexamobile.fr.</p></div>
-      <div class="cgv-item"><div class="cgtit">⚖️ Médiation et litiges</div><p class="cgtext">En cas de litige non résolu, vous pouvez recourir gratuitement au <strong>Médiateur des communications électroniques</strong>, conformément à l'article L612-1 du Code de la consommation. Les présentes CGV sont soumises au droit français. Tribunal compétent : Tribunal de Commerce de Paris.</p></div>
+    <div class="cgv-grid reveal">
+      <div class="cgv-card">
+        <h4>📋 Abonnement et facturation</h4>
+        <p>Les forfaits sont proposés <strong>sans engagement</strong> et facturés mensuellement à la date de souscription. Paiement par carte bancaire ou prélèvement SEPA. <strong>Aucuns frais d'activation</strong>. Renouvellement mensuel tacite.</p>
+      </div>
+      <div class="cgv-card">
+        <h4>🔓 Résiliation libre</h4>
+        <p>La résiliation est <strong>gratuite, sans délai et sans pénalité</strong>, à tout moment depuis l'espace client ou par email. La ligne reste active jusqu'à la fin du mois en cours. Aucun remboursement au prorata.</p>
+      </div>
+      <div class="cgv-card">
+        <h4>📱 eSIM et compatibilité</h4>
+        <p>NexaMobile est un opérateur <strong>exclusivement eSIM</strong>. Aucune carte SIM physique n'est fournie. L'eSIM est délivrée gratuitement par QR code à usage unique. En cas de changement de terminal, nouvelle eSIM <strong>gratuite</strong>.</p>
+      </div>
+      <div class="cgv-card">
+        <h4>📡 Données et usage loyal</h4>
+        <p>Usage personnel et non commercial exclusivement. En cas de <strong>dépassement du volume data</strong>, débit limité à 512 kbps jusqu'au renouvellement. L'usage abusif du tethering comme connexion fixe permanente peut entraîner une suspension.</p>
+      </div>
+      <div class="cgv-card">
+        <h4>🛰️ Réseau satellitaire</h4>
+        <p>La couverture satellitaire couvre <strong>47 pays européens</strong>. La qualité du signal peut varier lors de conditions météorologiques extrêmes. La latence est généralement inférieure à 40 ms. <strong>Aucun surcoût de roaming</strong> dans les pays couverts.</p>
+      </div>
+      <div class="cgv-card">
+        <h4>⌚ Option montre connectée</h4>
+        <p>Facturée <strong>+2 €/mois</strong>. Nécessite impérativement un forfait NexaMobile actif. Non souscriptible seule. La résiliation du forfait principal entraîne automatiquement la résiliation de l'option. Compatible Apple Watch Cellular Series 3+.</p>
+      </div>
+      <div class="cgv-card">
+        <h4>🔒 Données personnelles (RGPD)</h4>
+        <p>Traitement conforme au <strong>RGPD</strong>. Données utilisées exclusivement pour la gestion de votre abonnement. Jamais revendues. Droit d'accès, de rectification et de suppression : <strong>privacy@nexamobile.fr</strong>.</p>
+      </div>
+      <div class="cgv-card">
+        <h4>⚖️ Médiation et litiges</h4>
+        <p>En cas de litige non résolu, recours gratuit au <strong>Médiateur des communications électroniques</strong> (art. L612-1 Code conso). CGV soumises au droit français. Tribunal compétent : <strong>Tribunal de Commerce de Paris</strong>.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- LEGAL -->
 
-<section class="leg-sect">
-  <div class="leg-inner">
-    <div class="leg-top">
-      <span class="leg-logo">NexaMobile</span>
-      <div class="leg-links">
-        <a href="#">Mentions légales</a><a href="#">Confidentialité</a>
-        <a href="#">Cookies</a><a href="#">CGV complètes (PDF)</a><a href="#">Accessibilité</a>
+<section id="legal" class="section-sm">
+  <div class="container">
+    <div class="legal-inner">
+      <div class="legal-logo">NexaMobile</div>
+      <div class="legal-links">
+        <a href="#">Mentions légales</a>
+        <a href="#">Politique de confidentialité</a>
+        <a href="#">Cookies</a>
+        <a href="#">CGV complètes (PDF)</a>
+        <a href="#">Accessibilité</a>
       </div>
     </div>
-    <p class="leg-text">NexaMobile SAS — Capital social : 50 000 € — RCS Paris B 123 456 789 — SIRET : 123 456 789 00001 — Numéro ARCEP : [en cours] — TVA : FR12 123456789 — Siège : 12 rue de la Paix, 75002 Paris. DG : [Directeur Général]. Support : 09 XX XX XX XX (non surtaxé) — support@nexamobile.fr.<br>Les forfaits et prix sont valables sous réserve de disponibilité et peuvent être modifiés sans préavis. Appels illimités vers fixes et mobiles en France métropolitaine, hors numéros spéciaux. Le débit 5G est variable selon la localisation, la densité réseau et le terminal.</p>
+    <p class="legal-note" style="margin-top:20px">
+      NexaMobile SAS — Capital : 50 000 € — RCS Paris B 123 456 789 — SIRET : 123 456 789 00001 — Numéro ARCEP : [en cours] — TVA : FR12 123456789 — Siège : 12 rue de la Paix, 75002 Paris. Support : 09 XX XX XX XX (non surtaxé) — support@nexamobile.fr. Les prix et conditions sont valables sous réserve de disponibilité. Appels illimités vers fixes et mobiles en France métropolitaine, hors numéros spéciaux. Débit variable selon conditions atmosphériques et localisation.
+    </p>
   </div>
 </section>
 
 <!-- FOOTER -->
 
 <footer>
-  <div class="foot-inner">
-    <div class="foot-top">
-      <div><div class="fbn">NexaMobile</div><p class="fbd">L'opérateur mobile 100% eSIM pensé pour votre liberté. Simple, rapide, sans engagement.</p></div>
-      <div class="fcol"><h4>Forfaits</h4><ul><li><a href="#">Classique — 6,99 €</a></li><li><a href="#">Plus — 9,99 €</a></li><li><a href="#">Max — 19,99 €</a></li><li><a href="#">Option Montre +2 €</a></li></ul></div>
-      <div class="fcol"><h4>Support</h4><ul><li><a href="#">Centre d'aide</a></li><li><a href="#">Activer l'eSIM</a></li><li><a href="#">Portabilité</a></li><li><a href="#">Mon compte</a></li><li><a href="#">Contact</a></li></ul></div>
-      <div class="fcol"><h4>Légal</h4><ul><li><a href="#">CGV</a></li><li><a href="#">Mentions légales</a></li><li><a href="#">Confidentialité</a></li><li><a href="#">Cookies</a></li><li><a href="#">Médiation</a></li></ul></div>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">NexaMobile</div>
+        <p class="footer-brand-desc">L'opérateur 100% eSIM sur réseau satellitaire. Connecté partout en Europe, sans engagement.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Forfaits</h5>
+        <ul>
+          <li><a href="#">Classique — 6,99 €</a></li>
+          <li><a href="#">Plus — 9,99 €</a></li>
+          <li><a href="#">Max — 19,99 €</a></li>
+          <li><a href="#">Option Montre +2 €</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <ul>
+          <li><a href="#">Centre d'aide</a></li>
+          <li><a href="#">Activer l'eSIM</a></li>
+          <li><a href="#">Portabilité</a></li>
+          <li><a href="#">Mon compte</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Légal</h5>
+        <ul>
+          <li><a href="#">CGV</a></li>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">Confidentialité</a></li>
+          <li><a href="#">Cookies</a></li>
+          <li><a href="#">Médiation</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="foot-bot">
+    <div class="footer-bottom">
       <span>© 2025 NexaMobile SAS — Tous droits réservés</span>
-      <span>Opérateur 100% eSIM · Sans engagement · France</span>
+      <span>Opérateur 100% eSIM · Réseau Satellitaire · France</span>
     </div>
   </div>
 </footer>
 
 <script>
-// CURSOR
-const cur=document.getElementById('cur'),ring=document.getElementById('ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
-(function anim(){rx+=(mx-rx)*0.13;ry+=(my-ry)*0.13;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim)})();
-document.querySelectorAll('a,button,.fq,.why-item,.pc,.tcard,.watch-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>ring.classList.add('h'));
-  el.addEventListener('mouseleave',()=>ring.classList.remove('h'));
-});
+// ── REVEAL ON SCROLL
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-// REVEAL
-const obs=new IntersectionObserver((en)=>{en.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('ok'),i*55);obs.unobserve(e.target)}})},{threshold:.07});
-document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+// ── COUNT UP
+function countUp(el, target, duration) {
+  let start = 0;
+  const step = target / (duration / 16);
+  const t = setInterval(() => {
+    start = Math.min(start + step, target);
+    el.textContent = Math.floor(start);
+    if (start >= target) clearInterval(t);
+  }, 16);
+}
+const countObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && e.target.dataset.count) {
+      countUp(e.target, parseInt(e.target.dataset.count), 1200);
+      countObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
 
-// FAQ
-document.querySelectorAll('.fq').forEach(q=>{q.addEventListener('click',()=>{const it=q.parentElement,op=it.classList.contains('op');document.querySelectorAll('.fitem').forEach(i=>i.classList.remove('op'));if(!op)it.classList.add('op')})});
+// Hero stat count
+const sc1 = document.getElementById('sc1');
+const heroObs = new IntersectionObserver(() => {
+  countUp(sc1, 47, 1400);
+  heroObs.disconnect();
+}, { threshold: 0.5 });
+heroObs.observe(sc1);
 
-// PLAN TOGGLE
-const pr={c:{m:'6<sup>,99</sup>',y:'5<sup>,94</sup>'},p:{m:'9<sup>,99</sup>',y:'8<sup>,49</sup>'},x:{m:'19<sup>,99</sup>',y:'16<sup>,99</sup>'}};
-function swPlan(mode,btn){
-  document.querySelectorAll('.tog-btn').forEach(b=>b.classList.remove('act'));btn.classList.add('act');
-  document.getElementById('pc1').innerHTML='<sup>€</sup>'+pr.c[mode];
-  document.getElementById('pc2').innerHTML='<sup>€</sup>'+pr.p[mode];
-  document.getElementById('pc3').innerHTML='<sup>€</sup>'+pr.x[mode];
+// ── BILLING TOGGLE
+const prices = {
+  c: { monthly: ['6','99'], yearly: ['5','94'] },
+  p: { monthly: ['9','99'], yearly: ['8','49'] },
+  m: { monthly: ['19','99'], yearly: ['16','99'] }
+};
+function setBilling(mode) {
+  document.querySelectorAll('.billing-toggle button').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + mode).classList.add('active');
+  ['c','p','m'].forEach(id => {
+    const [euros, cents] = prices[id][mode === 'monthly' ? 'monthly' : 'yearly'];
+    document.getElementById('price-' + id).innerHTML = `<sup>€</sup>${euros}<sup>,${cents}</sup>`;
+  });
 }
 
-// COUNT UP
-function cUp(el,t){let v=0;const s=t/90,ti=setInterval(()=>{v+=s;if(v>=t){el.textContent=t;clearInterval(ti)}else el.textContent=Math.floor(v)},16)}
-const co=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting&&e.target.dataset.count){cUp(e.target,+e.target.dataset.count);co.unobserve(e.target)}})},{threshold:.5});
-document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
+// ── FAQ
+document.querySelectorAll('.faq-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
 
-// QR VISUAL
-const qr=document.getElementById('eqr');
-if(qr){[1,1,1,0,1,1,1,0,0,0,1,0,1,0,1,1,1,0,1,0,1,0,0,0,1].forEach(v=>{const d=document.createElement('div');d.className='qdot '+(v?'qb':'qw');qr.appendChild(d)})}
+// ── NAV SCROLL
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.style.background = window.scrollY > 60
+    ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.75)';
+}, { passive: true });
 
-// NAV SCROLL
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>{nav.style.background=window.scrollY>60?'rgba(0,0,0,0.92)':'rgba(0,0,0,0.75)'});
+// ── SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
 
-// SMOOTH SCROLL
-document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
+// ── QR CODE VISUAL (simple pattern)
+const qrGrid = document.getElementById('qr-grid');
+if (qrGrid) {
+  // 7x7 QR-like pattern
+  const pat = [
+    1,1,1,1,1,1,1,
+    1,0,0,0,0,0,1,
+    1,0,1,0,1,0,1,
+    1,0,0,1,0,0,1,
+    1,0,1,0,1,0,1,
+    1,0,0,0,0,0,1,
+    1,1,1,1,1,1,1
+  ];
+  pat.forEach(v => {
+    const d = document.createElement('div');
+    d.className = 'qpx ' + (v ? 'on' : 'off');
+    qrGrid.appendChild(d);
+  });
+}
+
+// ── SAT ANIMATION in SVG (via JS)
+const svgNS = 'http://www.w3.org/2000/svg';
+const satSvg = document.querySelector('.sat-visual svg');
+if (satSvg) {
+  const orb = [
+    { rx: 200, ry: 60, dur: 8 },
+    { rx: 310, ry: 100, dur: 13 },
+    { rx: 400, ry: 130, dur: 19 }
+  ];
+  const colors = ['#0a84ff','#32ade6','#30d158'];
+  orb.forEach((o, i) => {
+    const use = document.createElementNS(svgNS, 'use');
+    use.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#s' + ['A','B','C'][i]);
+    use.setAttribute('transform', 'translate(450,180)');
+    const anim = document.createElementNS(svgNS, 'animateTransform');
+    anim.setAttribute('attributeName', 'transform');
+    anim.setAttribute('type', 'rotate');
+    anim.setAttribute('from', `${i*120} 0 0`);
+    anim.setAttribute('to', `${i*120+360} 0 0`);
+    anim.setAttribute('dur', o.dur + 's');
+    anim.setAttribute('repeatCount', 'indefinite');
+    use.appendChild(anim);
+    satSvg.appendChild(use);
+  });
+}
 </script>
 
 </body>
